@@ -22,7 +22,7 @@ const model = {
     this._darkMode = value;
     this._applyDarkMode(value);
   },
-  _darkMode: true,
+  _darkMode: false,
 
   get speech() {
     return this._speech;
@@ -68,7 +68,7 @@ const model = {
     this._detailMode = value;
     this._applyDetailMode(value);
   },
-  _detailMode: "current", // Default: show current step only
+  _detailMode: "collapsed", // Default: all collapsed for cleaner coworker UI
 
   // Detail mode options for UI sidebar
   detailModeOptions: [
@@ -84,9 +84,9 @@ const model = {
       // Load persisted preferences with safe fallbacks
       try {
         const storedDarkMode = localStorage.getItem("darkMode");
-        this._darkMode = storedDarkMode !== "false";
+        this._darkMode = storedDarkMode === "true";
       } catch {
-        this._darkMode = true; // Default to dark mode if localStorage is unavailable
+        this._darkMode = false; // Default to light mode
       }
 
       try {
@@ -113,7 +113,7 @@ const model = {
           this._detailMode = storedDetailMode;
         }
       } catch {
-        this._detailMode = "current"; // Default
+        this._detailMode = "collapsed"; // Default
       }
 
       // load utility messages preference

@@ -190,6 +190,15 @@ const model = {
     return icons[type] || "info";
   },
 
+  // Submit a message from the welcome screen input
+  submitFromWelcome(text) {
+    if (!text || !text.trim()) return;
+    chatsStore.newChat();
+    setTimeout(() => {
+      chatInputStore.sendMessage(text.trim());
+    }, 150);
+  },
+
   // Execute an action by ID
   executeAction(actionId) {
     switch (actionId) {

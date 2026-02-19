@@ -10,7 +10,7 @@
 <body>
   <div x-data>
     <template x-if="$store.sidebar">
-      <div id="left-panel" class="panel" x-data :class="{'hidden': !$store.sidebar.isOpen}">
+      <div id="left-panel" class="panel" x-data :class="{'hidden': !$store.sidebar.isOpen, 'collapsed': $store.sidebar.isCollapsed}">
         <!--Sidebar upper elements-->
         <div class="left-panel-top no-scrollbar">
           <!-- Top Section: Header Icons + Quick Actions -->
@@ -42,18 +42,33 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all var(--transition-speed) ease-in-out;
-      width: 250px;
-      min-width: 250px;
+      transition: width var(--transition-speed) ease-in-out,
+                  min-width var(--transition-speed) ease-in-out,
+                  margin-left var(--transition-speed) ease-in-out;
+      width: 260px;
+      min-width: 260px;
       color: var(--color-text);
-      box-shadow: 1px 0 5px rgba(0, 0, 0, 0.3);
+      box-shadow: 1px 0 5px rgba(0, 0, 0, 0.1);
       user-select: none;
       -webkit-user-select: none;
-      /* Safari compatibility */
       height: 100vh;
-      /* Ensure full height */
       overflow: hidden;
-      /* Prevent overall panel overflow */
+    }
+
+    /* Collapsed sidebar: icons only */
+    #left-panel.collapsed {
+      width: 56px;
+      min-width: 56px;
+    }
+
+    #left-panel.collapsed .section-header,
+    #left-panel.collapsed #tasks-section,
+    #left-panel.collapsed .left-panel-bottom {
+      display: none;
+    }
+
+    #left-panel.collapsed .left-panel-top {
+      padding: var(--spacing-sm) var(--spacing-xs) 0 var(--spacing-xs);
     }
 
     /* Ensure component host behaves like the original direct children for flex layout */
@@ -70,7 +85,11 @@
     }
 
     #left-panel.hidden {
-      margin-left: -250px;
+      margin-left: -260px;
+    }
+
+    #left-panel.collapsed.hidden {
+      margin-left: -56px;
     }
 
     .left-panel-top {

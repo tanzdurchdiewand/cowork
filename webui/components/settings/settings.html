@@ -33,27 +33,19 @@
             <div class="settings-tab"
                  :class="{'active': $store.settings.activeTab === 'agent'}"
                  @click="$store.settings.switchTab('agent')"
-                 title="Agent Settings">Agent Settings</div>
+                 title="Agent Settings">Agent</div>
+            <div class="settings-tab"
+                 :class="{'active': $store.settings.activeTab === 'external'}"
+                 @click="$store.settings.switchTab('external')"
+                 title="API Keys">API Keys</div>
             <div class="settings-tab"
                  :class="{'active': $store.settings.activeTab === 'skills'}"
                  @click="$store.settings.switchTab('skills')"
                  title="Skills">Skills</div>
             <div class="settings-tab"
-                 :class="{'active': $store.settings.activeTab === 'external'}"
-                 @click="$store.settings.switchTab('external')"
-                 title="External Services">External Services</div>
-            <div class="settings-tab" 
                  :class="{'active': $store.settings.activeTab === 'mcp'}"
-                 @click="$store.settings.switchTab('mcp')" 
-                 title="MCP">MCP/A2A</div>
-            <div class="settings-tab" 
-                 :class="{'active': $store.settings.activeTab === 'developer'}"
-                 @click="$store.settings.switchTab('developer')" 
-                 title="Developer">Developer</div>
-            <div class="settings-tab"
-                 :class="{'active': $store.settings.activeTab === 'backup'}"
-                 @click="$store.settings.switchTab('backup')"
-                 title="Backup & Restore">Backup & Restore</div>
+                 @click="$store.settings.switchTab('mcp')"
+                 title="MCP">MCP</div>
           </div>
         </div>
 
@@ -65,17 +57,11 @@
           <div x-show="$store.settings.activeTab === 'external'">
             <x-component path="settings/external/external-settings.html"></x-component>
           </div>
-          <div x-show="$store.settings.activeTab === 'mcp'">
-            <x-component path="settings/mcp/mcp-settings.html"></x-component>
-          </div>
-          <div x-show="$store.settings.activeTab === 'developer'">
-            <x-component path="settings/developer/developer-settings.html"></x-component>
-          </div>
-          <div x-show="$store.settings.activeTab === 'backup'">
-            <x-component path="settings/backup/backup-settings.html"></x-component>
-          </div>
           <div x-show="$store.settings.activeTab === 'skills'">
             <x-component path="settings/skills/skills-settings.html"></x-component>
+          </div>
+          <div x-show="$store.settings.activeTab === 'mcp'">
+            <x-component path="settings/mcp/mcp-settings.html"></x-component>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 
 /* Add box-sizing globally for better cross-browser consistency */
 *,
@@ -8,64 +8,63 @@
 }
 
 :root {
-  /* Dark mode */
-  --color-background-dark: #131313;
-  --color-text-dark: #ffffff;
-  --color-text-muted-dark: #d4d4d4e4;
-  --color-primary-dark: #737a81;
-  --color-secondary-dark: #656565;
-  --color-accent-dark: #cf6679;
-  --color-message-bg-dark: #2d2d2d;
-  --color-highlight-dark: #2b5ab9;
-  --color-message-text-dark: #e0e0e0;
-  --color-panel-dark: #1a1a1a;
-  --color-border-dark: #444444a8;
-  --color-input-dark: #131313;
-  --color-input-focus-dark: #101010;
-  --color-chat-background-dark: #212121;
-  --color-error-text-dark:#e72323;
-  --color-warning-text-dark:#e79c23;
-  --color-table-row-dark: #272727;
-
-  /* Light mode */
-  --color-background-light: #fafafa;
-  --color-text-light: #333333;
-  --color-text-muted-light: #333333e4;
-  --color-primary-light: #384653;
-  --color-secondary-light: #e8eaf6;
-  --color-accent-light: #b00020;
+  /* Light mode (default) */
+  --color-background-light: #fafaf8;
+  --color-text-light: #1a1a1a;
+  --color-text-muted-light: #6b6b6b;
+  --color-primary-light: #f57c00;
+  --color-secondary-light: #f0ebe4;
+  --color-accent-light: #d84315;
   --color-message-bg-light: #ffffff;
-  --color-highlight-light: #2563eb;
-  --color-message-text-light: #333333;
-  --color-panel-light: #f0f0f0;
-  --color-border-light: #bdbdbdcf;
-  --color-input-light: #e4e4e4;
-  --color-input-focus-light: #dadada;
-  --color-chat-background-light: #fafafa;
-  --color-error-text-light:#920000;
-  --color-warning-text-light:#936214;
-  --color-table-row-light: #edededf3;
+  --color-highlight-light: #f57c00;
+  --color-message-text-light: #1a1a1a;
+  --color-panel-light: #f5f2ed;
+  --color-border-light: #d6d0c8;
+  --color-input-light: #ffffff;
+  --color-input-focus-light: #fff8f0;
+  --color-chat-background-light: #fafaf8;
+  --color-error-text-light: #c62828;
+  --color-warning-text-light: #e65100;
+  --color-table-row-light: #f5f2edf3;
 
+  /* Dark mode */
+  --color-background-dark: #1a1a1e;
+  --color-text-dark: #e8e6e1;
+  --color-text-muted-dark: #9a9690;
+  --color-primary-dark: #ffab40;
+  --color-secondary-dark: #2a2a2e;
+  --color-accent-dark: #ff6e40;
+  --color-message-bg-dark: #242428;
+  --color-highlight-dark: #ffab40;
+  --color-message-text-dark: #e8e6e1;
+  --color-panel-dark: #202024;
+  --color-border-dark: #3a3a3e;
+  --color-input-dark: #1a1a1e;
+  --color-input-focus-dark: #252528;
+  --color-chat-background-dark: #1e1e22;
+  --color-error-text-dark: #ef5350;
+  --color-warning-text-dark: #ffa726;
+  --color-table-row-dark: #252528;
 
-  /* Default to dark mode */
-  --color-background: var(--color-background-dark);
-  --color-text: var(--color-text-dark);
-  --color-text-muted: var(--color-text-muted-dark);
-  --color-primary: var(--color-primary-dark);
-  --color-secondary: var(--color-secondary-dark);
-  --color-accent: var(--color-accent-dark);
-  --color-message-bg: var(--color-message-bg-dark);
-  --color-highlight: var(--color-highlight-dark);
-  --color-message-text: var(--color-message-text-dark);
-  --color-panel: var(--color-panel-dark);
-  --color-border: var(--color-border-dark);
-  --color-input: var(--color-input-dark);
-  --color-input-focus: var(--color-input-focus-dark);
-  --color-background-hover: color-mix(in srgb, var(--color-border) 50%, transparent);
-  --color-chat-background: var(--color-chat-background-dark);
-  --color-error-text:var(--color-error-text-dark);
-  --color-warning-text:var(--color-warning-text-dark);
-  --color-table-row: var(--color-table-row-dark);
+  /* Default to light mode */
+  --color-background: var(--color-background-light);
+  --color-text: var(--color-text-light);
+  --color-text-muted: var(--color-text-muted-light);
+  --color-primary: var(--color-primary-light);
+  --color-secondary: var(--color-secondary-light);
+  --color-accent: var(--color-accent-light);
+  --color-message-bg: var(--color-message-bg-light);
+  --color-highlight: var(--color-highlight-light);
+  --color-message-text: var(--color-message-text-light);
+  --color-panel: var(--color-panel-light);
+  --color-border: var(--color-border-light);
+  --color-input: var(--color-input-light);
+  --color-input-focus: var(--color-input-focus-light);
+  --color-background-hover: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  --color-chat-background: var(--color-chat-background-light);
+  --color-error-text: var(--color-error-text-light);
+  --color-warning-text: var(--color-warning-text-light);
+  --color-table-row: var(--color-table-row-light);
 
   /* Spacing variables */
   --spacing-xxs: 0.15rem;
@@ -82,37 +81,36 @@
   --font-size-large: 1.2rem;
 
   /* Font families */
-  --font-family-main: "Rubik", Arial, Helvetica, sans-serif;
+  --font-family-main: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-family-code: "Roboto Mono", monospace;
 
   /* Other variables */
-  --border-radius: 1.125rem;
+  --border-radius: 1rem;
   --border-radius-sm: 0.5rem;
   --transition-speed: 0.3s;
-  --svg-filter: brightness(0) saturate(100%) var(--color-primary-filter);
-  --color-primary-filter: invert(73%) sepia(17%) saturate(360%)
-    hue-rotate(177deg) brightness(87%) contrast(85%);
+  --svg-filter: brightness(0) saturate(100%) invert(46%) sepia(98%) saturate(1000%) hue-rotate(10deg) brightness(100%) contrast(96%);
 }
 
-/* Light mode class */
-.light-mode {
-  --color-background: var(--color-background-light);
-  --color-text: var(--color-text-light);
-  --color-text-muted: var(--color-text-muted-light);
-  --color-primary: var(--color-primary-light);
-  --color-secondary: var(--color-secondary-light);
-  --color-accent: var(--color-accent-light);
-  --color-message-bg: var(--color-message-bg-light);
-  --color-message-text: var(--color-message-text-light);
-  --color-panel: var(--color-panel-light);
-  --color-border: var(--color-border-light);
-  --color-input: var(--color-input-light);
-  --color-input-focus: var(--color-input-focus-light);
-  --color-background-hover: color-mix(in srgb, var(--color-border) 50%, transparent);
-  --color-chat-background: var(--color-chat-background-light);
-  --color-error-text:var(--color-error-text-light);
-  --color-warning-text:var(--color-warning-text-light);
-  --color-table-row: var(--color-table-row-light);
+/* Dark mode class */
+.dark-mode {
+  --color-background: var(--color-background-dark);
+  --color-text: var(--color-text-dark);
+  --color-text-muted: var(--color-text-muted-dark);
+  --color-primary: var(--color-primary-dark);
+  --color-secondary: var(--color-secondary-dark);
+  --color-accent: var(--color-accent-dark);
+  --color-message-bg: var(--color-message-bg-dark);
+  --color-highlight: var(--color-highlight-dark);
+  --color-message-text: var(--color-message-text-dark);
+  --color-panel: var(--color-panel-dark);
+  --color-border: var(--color-border-dark);
+  --color-input: var(--color-input-dark);
+  --color-input-focus: var(--color-input-focus-dark);
+  --color-background-hover: color-mix(in srgb, var(--color-primary) 15%, transparent);
+  --color-chat-background: var(--color-chat-background-dark);
+  --color-error-text: var(--color-error-text-dark);
+  --color-warning-text: var(--color-warning-text-dark);
+  --color-table-row: var(--color-table-row-dark);
 } 
 
 

@@ -739,7 +739,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /*
- * A0 Chat UI
+ * Coworker Chat UI
  *
  * Unified sidebar layout:
  * - Both Chats and Tasks lists are always visible in a vertical layout

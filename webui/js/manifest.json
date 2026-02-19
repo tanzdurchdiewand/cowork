@@ -1,11 +1,11 @@
 {
-  "name": "Agent Zero",
-  "short_name": "Agent Zero",
-  "description": "Autonomous AI agent",
+  "name": "Coworker",
+  "short_name": "Coworker",
+  "description": "Your AI team member",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a1a",
-  "theme_color": "#333333",
+  "theme_color": "#f57c00",
   "icons": [
     {
       "src": "/public/icon-maskable.svg",

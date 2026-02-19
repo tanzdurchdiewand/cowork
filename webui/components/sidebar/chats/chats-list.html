@@ -24,6 +24,7 @@
           <template x-for="context in $store.chats.contexts" :key="context.id">
             <li>
               <div :class="{'chat-container': true, 'chat-selected': context.id === $store.chats.selected}"
+                :title="context.name || 'Chat #' + context.no"
                 @click="$store.chats.selectChat(context.id)">
                 <div class="chat-list-button">
                   <span :class="{'project-color-ball': true, 'heartbeat': context.running}"
@@ -163,6 +164,15 @@
       font-size: var(--font-size-normal);
       font-weight: bold;
     }
+
+    /* Collapsed sidebar: hide text, center color ball */
+    #left-panel.collapsed .chats-list-container .section-header-row { display: none; }
+    #left-panel.collapsed .chats-list-container { margin-top: var(--spacing-xs); }
+    #left-panel.collapsed .chat-name { display: none; }
+    #left-panel.collapsed .chat-list-action-btn { display: none !important; }
+    #left-panel.collapsed .chat-list-button { justify-content: center; padding: 10px 0; }
+    #left-panel.collapsed .project-color-ball { width: 0.7em; height: 0.7em; }
+    #left-panel.collapsed .empty-list-message { display: none; }
 
     /* .chat-list-button.font-bold { position: relative; background-color: var(--color-border) 0.05; } */
     /* .chat-list-button.font-bold::before { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 3px; background-color: var(--color-border); border-top-left-radius: 3px; border-bottom-left-radius: 3px; } */

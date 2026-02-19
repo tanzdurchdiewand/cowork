@@ -106,6 +106,8 @@ const model = {
     };
     (this.additional?.chat_providers || []).forEach(addProvider);
     (this.additional?.embedding_providers || []).forEach(addProvider);
+    // Add non-model service providers
+    addProvider({ value: "assemblyai", label: "AssemblyAI" });
     options.sort((a, b) => a.label.localeCompare(b.label));
     return options;
   },

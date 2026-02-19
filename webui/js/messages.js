@@ -21,6 +21,38 @@ const STEP_COLLAPSE_DELAY = {
 // delay collapse when hovering
 const STEP_COLLAPSE_HOVER_DELAY_MS = 5000;
 
+// Badge label map: replaces 3-letter codes with icon + readable text
+const badgeLabelMap = {
+  GEN: { icon: "psychology",      label: "Thinking" },
+  USE: { icon: "build",           label: "Tool" },
+  EXE: { icon: "terminal",        label: "Code" },
+  WWW: { icon: "language",        label: "Browser" },
+  MCP: { icon: "hub",             label: "MCP" },
+  SUB: { icon: "group",           label: "Agent" },
+  RES: { icon: "chat_bubble",     label: "Reply" },
+  INF: { icon: "info",            label: "Info" },
+  WRN: { icon: "warning",         label: "Warning" },
+  ERR: { icon: "error",           label: "Error" },
+  HDL: { icon: "hourglass_top",   label: "Working" },
+  HNT: { icon: "lightbulb",      label: "Hint" },
+  UTL: { icon: "tune",            label: "System" },
+  END: { icon: "check_circle",    label: "Done" },
+  SKL: { icon: "auto_fix_high",   label: "Skill" },
+  EYE: { icon: "visibility",      label: "Vision" },
+  WEB: { icon: "search",          label: "Search" },
+  MEM: { icon: "memory",          label: "Memory" },
+};
+
+function badgeHTML(code) {
+  const entry = badgeLabelMap[code] || { icon: "help", label: code };
+  return `<span class="step-badge ${code}"><span class="material-symbols-outlined">${entry.icon}</span>${entry.label}</span>`;
+}
+
+function badgeInnerHTML(code) {
+  const entry = badgeLabelMap[code] || { icon: "help", label: code };
+  return `<span class="material-symbols-outlined">${entry.icon}</span>${entry.label}`;
+}
+
 // dom references
 let _chatHistory = null;
 
@@ -395,8 +427,8 @@ function drawProcessStep({
     if (prevCode) step.classList.remove(prevCode);
     step.setAttribute("data-step-code", code);
     step.classList.add(code);
-    step.querySelector(".step-badge").textContent = code;
-    badge.innerText = code;
+    badge.className = `step-badge ${code}`;
+    badge.innerHTML = badgeInnerHTML(code);
   }
 
   // header row - title
@@ -1771,7 +1803,7 @@ function createProcessGroup(id) {
   header.innerHTML = `
     <span class="expand-icon"></span>
     <span class="group-title">Processing...</span>
-    <span class="step-badge GEN">GEN</span>
+    ${badgeHTML("GEN")}
     <span class="group-metrics">
       <span class="metric-time" title="Start time"><span class="material-symbols-outlined">schedule</span><span class="metric-value">--:--</span></span>
       <span class="metric-steps display-none" title="Steps"><span class="material-symbols-outlined">footprint</span><span class="metric-value">0</span></span>
@@ -2011,7 +2043,7 @@ function updateProcessGroupHeader(group) {
   // If completed, set badge to END
   if (isCompleted) {
     // set end badge
-    badgeEl.outerHTML = `<span class="step-badge END">END</span>`;
+    badgeEl.outerHTML = badgeHTML("END");
     // remove shine from any steps
     group.querySelectorAll(".step-title.shiny-text").forEach((el) => {
       el.classList.remove("shiny-text");
@@ -2021,7 +2053,7 @@ function updateProcessGroupHeader(group) {
     if (badgeEl && steps.length > 0) {
       const lastStep = steps[steps.length - 1];
       const code = lastStep.getAttribute("data-step-code");
-      badgeEl.outerHTML = `<span class="step-badge ${code}">${code}</span>`;
+      badgeEl.outerHTML = badgeHTML(code);
     }
   }
 

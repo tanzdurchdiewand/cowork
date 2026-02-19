@@ -7,8 +7,8 @@ const model = {
 
   get versionLabel() {
     return this.versionNo && this.commitTime
-      ? `Version ${this.versionNo} ${this.commitTime}`
-      : "";
+      ? `Coworker ${this.versionNo}`
+      : "Coworker";
   },
 
   init() {

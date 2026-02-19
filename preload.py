@@ -1,7 +1,6 @@
 import asyncio
-from python.helpers import runtime, whisper, settings
+from python.helpers import runtime, settings
 from python.helpers.print_style import PrintStyle
-from python.helpers import kokoro_tts
 import models
 
 

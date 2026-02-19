@@ -92,18 +92,6 @@
         <span>Clear Chat</span>
       </button>
       
-      <div class="dropdown-separator"></div>
-      
-      <button class="dropdown-item" @click="$confirmClick($event, () => { $store.chats.logout(); dropdownOpen = false })" :disabled="!$store.chats.loggedIn">
-        <span class="material-symbols-outlined">logout</span>
-        <span>Logout</span>
-      </button>
-
-      <button class="dropdown-item" @click="$confirmClick($event, () => { $store.chats.restart(); dropdownOpen = false })">
-        <span class="material-symbols-outlined">restart_alt</span>
-        <span>Restart A0</span>
-      </button>
-
     </div>
   </div>
 </body>
@@ -249,6 +237,22 @@
   /* Transition helpers */
   .-translate-y-1 { transform: translateY(-0.25rem); }
   .translate-y-0 { transform: translateY(0); }
+
+  /* Collapsed sidebar: stack icons vertically */
+  #left-panel.collapsed #quick-actions {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  #left-panel.collapsed .config-button {
+    border-radius: 6px !important;
+    margin-right: 0 !important;
+    border-right: 0.05rem solid var(--color-border) !important;
+  }
+
+  #left-panel.collapsed .dropdown-toggle {
+    display: none;
+  }
 </style>
 
 </html>

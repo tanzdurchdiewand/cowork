@@ -3,6 +3,7 @@ import { createStore } from "/js/AlpineStore.js";
 // This store manages the visibility and state of the main sidebar panel.
 const model = {
   isOpen: true,
+  isCollapsed: false,
   _initialized: false,
 
   // Centralized collapse state for all sidebar sections (persisted in localStorage)
@@ -18,6 +19,9 @@ const model = {
     this._initialized = true;
 
     this.loadSectionStates();
+    try {
+      this.isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    } catch (e) { /* ignore */ }
     this.handleResize();
     this.resizeHandler = () => this.handleResize();
     window.addEventListener("resize", this.resizeHandler);
@@ -65,9 +69,21 @@ const model = {
     this._initialized = false;
   },
 
-  // Toggle the sidebar's visibility
+  // Toggle collapsed state (desktop) or visibility (mobile)
   toggle() {
-    this.isOpen = !this.isOpen;
+    if (this.isMobile()) {
+      this.isOpen = !this.isOpen;
+    } else {
+      this.toggleCollapse();
+    }
+  },
+
+  // Toggle between collapsed (icons only) and expanded (full width)
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
+    try {
+      localStorage.setItem('sidebarCollapsed', this.isCollapsed);
+    } catch (e) { /* ignore */ }
   },
 
   // Close the sidebar, e.g., on overlay click on mobile
@@ -79,7 +95,11 @@ const model = {
 
   // Handle browser resize to show/hide sidebar based on viewport width
   handleResize() {
-    this.isOpen = !this.isMobile();
+    if (this.isMobile()) {
+      this.isOpen = false;
+    } else {
+      this.isOpen = true;
+    }
   },
 
   // Check if the current viewport is mobile
@@ -89,7 +109,7 @@ const model = {
 
   // Dropdown positioning for quick-actions (fixed position to escape overflow:hidden)
   dropdownStyle: {},
-  
+
   updateDropdownPosition(triggerElement) {
     if (!triggerElement) return;
     const rect = triggerElement.getBoundingClientRect();

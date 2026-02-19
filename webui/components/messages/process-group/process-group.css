@@ -114,21 +114,22 @@
 .step-badge {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-size: 0.65rem;
-  font-weight: 600;
-  font-family: var(--font-family-code);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  font-family: var(--font-family-main);
+  text-transform: none;
+  letter-spacing: normal;
   flex-shrink: 0;
   line-height: 1;
+  background: color-mix(in srgb, var(--step-accent, #94a3b8) 12%, transparent);
 }
 
-/* Status badge with icon */
+/* Status badge icon */
 .step-badge .material-symbols-outlined {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   line-height: 1;
 }
 
