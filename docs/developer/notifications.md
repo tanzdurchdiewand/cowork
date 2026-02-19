@@ -1,6 +1,6 @@
-# Agent Zero Notifications
+# Cowork Notifications
 
-Quick guide for using the notification system in Agent Zero.
+Quick guide for using the notification system in Cowork.
 
 > [!TIP]
 > Notifications pair well with scheduled tasks. See [Tasks & Scheduling](../guides/usage.md#tasks--scheduling) for automation patterns.

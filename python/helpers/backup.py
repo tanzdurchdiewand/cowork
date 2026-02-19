@@ -26,12 +26,12 @@ class BackupService:
     """
 
     def __init__(self):
-        self.agent_zero_version = self._get_agent_zero_version()
-        self.agent_zero_root = files.get_abs_path("")  # Resolved Agent Zero root
+        self.cowork_version = self._get_cowork_version()
+        self.cowork_root = files.get_abs_path("")  # Resolved Cowork root
 
         # Build base paths map for pattern resolution
         self.base_paths = {
-            self.agent_zero_root: self.agent_zero_root,
+            self.cowork_root: self.cowork_root,
         }
 
     def get_default_backup_metadata(self) -> Dict[str, Any]:
@@ -58,14 +58,14 @@ class BackupService:
         Only includes Coworker project directory patterns.
         """
         # Ensure paths don't have double slashes
-        agent_root = self.agent_zero_root.rstrip('/')
+        agent_root = self.cowork_root.rstrip('/')
 
         return f"""# User data
 # All persistent user data is now centralized in /usr for easier backup and restore
 {agent_root}/usr/**
 """
 
-    def _get_agent_zero_version(self) -> str:
+    def _get_cowork_version(self) -> str:
         """Get current Coworker version"""
         try:
             # Get version from git info (same as run_ui.py)
@@ -147,7 +147,7 @@ class BackupService:
                 "path": os.environ.get("PATH", "")[:200] + "..." if len(os.environ.get("PATH", "")) > 200 else os.environ.get("PATH", ""),
                 "timezone": str(datetime.datetime.now().astimezone().tzinfo),
                 "working_directory": os.getcwd(),
-                "agent_zero_root": files.get_abs_path(""),
+                "cowork_root": files.get_abs_path(""),
                 "runtime_mode": "development" if runtime.is_development() else "production"
             }
         except Exception as e:
@@ -203,17 +203,17 @@ class BackupService:
 
         Args:
             patterns: List of patterns from the backed up system
-            backup_metadata: Backup metadata containing the original agent_zero_root
+            backup_metadata: Backup metadata containing the original cowork_root
 
         Returns:
             List of translated patterns for the current system
         """
         # Get the backed up agent zero root path from metadata
         environment_info = backup_metadata.get("environment_info", {})
-        backed_up_agent_root = environment_info.get("agent_zero_root", "")
+        backed_up_agent_root = environment_info.get("cowork_root", "")
 
         # Get current agent zero root path
-        current_agent_root = self.agent_zero_root
+        current_agent_root = self.cowork_root
 
         # If we don't have the backed up root path, return patterns as-is
         if not backed_up_agent_root:
@@ -356,7 +356,7 @@ class BackupService:
                 # Add comprehensive metadata
                 metadata = {
                     # Basic backup information
-                    "agent_zero_version": self.agent_zero_version,
+                    "cowork_version": self.cowork_version,
                     "timestamp": datetime.datetime.now().isoformat(),
                     "backup_name": backup_name,
                     "include_hidden": include_hidden,
@@ -760,17 +760,17 @@ class BackupService:
 
         Args:
             archive_path: Original file path from the archive
-            backup_metadata: Backup metadata containing the original agent_zero_root
+            backup_metadata: Backup metadata containing the original cowork_root
 
         Returns:
             Translated path for the current system
         """
         # Get the backed up agent zero root path from metadata
         environment_info = backup_metadata.get("environment_info", {})
-        backed_up_agent_root = environment_info.get("agent_zero_root", "")
+        backed_up_agent_root = environment_info.get("cowork_root", "")
 
         # Get current agent zero root path
-        current_agent_root = self.agent_zero_root
+        current_agent_root = self.cowork_root
 
         # If we don't have the backed up root path, use original path with leading slash
         if not backed_up_agent_root:

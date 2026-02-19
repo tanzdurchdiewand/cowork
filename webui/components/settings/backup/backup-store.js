@@ -660,7 +660,7 @@ const model = {
 
     // Check Coworker version compatibility
     // Note: Both backup and current versions are obtained via git.get_git_info()
-    const backupVersion = this.backupMetadata.agent_zero_version;
+    const backupVersion = this.backupMetadata.cowork_version;
     const currentVersion = globalThis.gitinfo.version; // Retrieved from git.get_git_info() on backend
 
     if (backupVersion !== currentVersion && backupVersion !== "development") {

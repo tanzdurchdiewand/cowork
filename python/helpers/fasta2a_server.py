@@ -238,7 +238,7 @@ class DynamicA2AProxy:
 
             provider: AgentProvider = {  # type: ignore
                 "organization": "Coworker",
-                "url": "https://github.com/frdel/agent-zero"
+                "url": "https://github.com/frdel/cowork"
             }
 
             # Create new FastA2A app with proper thread safety

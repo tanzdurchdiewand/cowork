@@ -68,7 +68,7 @@ This tool is used to send a message to the remote Coworker Instance connected re
     name="send_message",
     description=SEND_MESSAGE_DESCRIPTION,
     tags={
-        "agent_zero",
+        "cowork",
         "chat",
         "remote",
         "communication",
@@ -196,7 +196,7 @@ Always use this tool to finish persistent chat conversations with remote Coworke
     name="finish_chat",
     description=FINISH_CHAT_DESCRIPTION,
     tags={
-        "agent_zero",
+        "cowork",
         "chat",
         "remote",
         "communication",

@@ -102,7 +102,7 @@ Verschieben:
 
 ## 4. Branding → "Coworker"
 
-- [ ] "Agent Zero" → "Coworker" überall im UI umbenennen
+- [ ] "Cowork" → "Coworker" überall im UI umbenennen
 - [ ] Oranges "C" als Logo/Icon erstellen (SVG)
 - [ ] Sidebar-Header: Logo + "Coworker" Schriftzug
 - [ ] Welcome Screen: Neues Branding
@@ -263,7 +263,7 @@ requirements.txt                    → Kokoro/Whisper raus, AssemblyAI rein
 - Auth-Endpoints bereinigen
 
 ### Phase 5: Branding "Coworker"
-- Agent Zero → Coworker umbenennen
+- Cowork → Coworker umbenennen
 - Oranges "C" als Logo/Favicon/PWA-Icon
 - Welcome Screen + Sidebar anpassen
 - Sidebar Footer aufräumen
