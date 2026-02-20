@@ -1,0 +1,24 @@
+# Incremental local update - uses existing coworker:local as base
+# Use when tanzdurchdiewand/cowork-base:latest is not accessible (requires Docker Hub login)
+# Run from project root: docker build -f DockerfileLocalUpdate -t coworker:local .
+FROM coworker:local
+
+# Copy updated filesystem scripts (supervisord config, run scripts, install scripts, etc.)
+COPY ./docker/run/fs/ /
+
+# Copy current development files - overwrites /git/cowork in the image
+COPY ./ /git/cowork
+
+# Reinstall python packages using the venv (in case requirements changed)
+# uv is at /usr/local/bin/uv, venv at /opt/venv-a0
+RUN /usr/local/bin/uv pip install --python /opt/venv-a0/bin/python \
+    -r /git/cowork/requirements.txt && \
+    /usr/local/bin/uv pip install --python /opt/venv-a0/bin/python \
+    -r /git/cowork/requirements2.txt
+
+# Re-run preload in case model list or other preloaded data changed
+RUN /opt/venv-a0/bin/python /git/cowork/preload.py --dockerized=true
+
+RUN chmod +x /exe/initialize.sh /exe/run_A0.sh /exe/run_searxng.sh /exe/run_tunnel_api.sh
+
+CMD ["/exe/initialize.sh", "local"]

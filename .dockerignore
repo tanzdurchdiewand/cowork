@@ -23,7 +23,12 @@ usr/*
 .conda/
 .cursor/
 .venv/
+venv/
 .git/
+
+# Docker build artifacts (copies used by docker/run/Dockerfile, not needed here)
+docker/run/cowork-src/
+docker/run/cowork/
 
 
 ###############################################################################

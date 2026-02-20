@@ -11,11 +11,14 @@ ENV BRANCH=$BRANCH
 # Copy filesystem files to root
 COPY ./fs/ /
 
+# Copy local source files
+COPY ./cowork-src /git/cowork
+
 # pre installation steps
 RUN bash /ins/pre_install.sh $BRANCH
 
-# install A0
-RUN bash /ins/install_A0.sh $BRANCH
+# install A0 using local files
+RUN bash /ins/install_A0.sh local
 
 # install additional software
 RUN bash /ins/install_additional.sh $BRANCH
