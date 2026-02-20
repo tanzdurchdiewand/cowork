@@ -1,6 +1,6 @@
 # Use the pre-built base image for A0
 # FROM cowork-base:local
-FROM tanzdurchdiewand/cowork-base:latest
+FROM agent0ai/agent-zero-base:latest
 
 # Set BRANCH to "local" if not provided
 ARG BRANCH=local

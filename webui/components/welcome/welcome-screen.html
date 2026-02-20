@@ -11,26 +11,53 @@
         <template x-if="$store.welcomeStore && $store.welcomeStore.isVisible">
             <div x-create="$store.welcomeStore.onCreate()" class="welcome-container">
                 <div class="welcome-content">
-                    <!-- Logo -->
-                    <div class="welcome-logo-container">
-                        <img src="./public/favicon.svg" alt="Coworker" class="welcome-logo">
+                    <!-- Action Cards -->
+                    <div class="welcome-actions">
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('new-chat')">
+                            <span class="material-symbols-outlined welcome-action-icon">add_circle</span>
+                            <h3 class="welcome-action-title">New Chat</h3>
+                        </div>
+
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('projects')">
+                            <span class="material-symbols-outlined welcome-action-icon">folder</span>
+                            <h3 class="welcome-action-title">Projects</h3>
+                        </div>
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('memory')">
+                            <span class="material-symbols-outlined welcome-action-icon">memory</span>
+                            <h3 class="welcome-action-title">Memory</h3>
+                        </div>
+
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('scheduler')">
+                            <span class="material-symbols-outlined welcome-action-icon">schedule</span>
+                            <h3 class="welcome-action-title">Scheduler</h3>
+                        </div>
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('settings')">
+                            <span class="material-symbols-outlined welcome-action-icon">settings</span>
+                            <h3 class="welcome-action-title">Settings</h3>
+                        </div>
+
+                        <div class="welcome-action-card" @click="$store.welcomeStore.executeAction('files')">
+                            <span class="material-symbols-outlined welcome-action-icon">folder_open</span>
+                            <h3 class="welcome-action-title">Files</h3>
+                        </div>
                     </div>
 
-                    <!-- Greeting -->
-                    <h1 class="welcome-title">What can I help with?</h1>
+                    <div class="welcome-actions-footer">
+                        <button type="button"
+                                class="welcome-refresh-button"
+                                @click="$store.welcomeStore.refreshBanners(true)"
+                                :disabled="$store.welcomeStore.bannersLoading"
+                                title="Refresh banners">
+                            <span class="material-symbols-outlined" :class="{ 'welcome-spin': $store.welcomeStore.bannersLoading }">refresh</span>
+                        </button>
 
-                    <!-- Input -->
-                    <div class="welcome-input-wrapper">
-                        <textarea
-                            class="welcome-input"
-                            placeholder="Ask me anything..."
-                            rows="1"
-                            @keydown.enter.prevent="$store.welcomeStore.submitFromWelcome($event.target.value); $event.target.value = ''; $event.target.style.height = 'auto'"
-                            @input="$event.target.style.height = 'auto'; $event.target.style.height = Math.min($event.target.scrollHeight, 128) + 'px'"
-                        ></textarea>
-                        <button class="welcome-send-btn"
-                            @click="const ta = $el.parentElement.querySelector('textarea'); $store.welcomeStore.submitFromWelcome(ta.value); ta.value = ''; ta.style.height = 'auto'">
-                            <span class="material-symbols-outlined">arrow_upward</span>
+                        <button type="button"
+                                class="welcome-refresh-button"
+                                @click="$store.welcomeStore.undismissBanners()"
+                                x-show="$store.welcomeStore.hasDismissedBanners"
+                                :disabled="$store.welcomeStore.bannersLoading"
+                                title="Undismiss all banners">
+                            <span class="material-symbols-outlined">undo</span>
                         </button>
                     </div>
 
@@ -71,6 +98,29 @@
             color: var(--color-text);
             min-height: 100vh;
             position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("./public/darkSymbol.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 80% auto;
+            opacity: 0.07;
+            pointer-events: none;
+        }
+
+        .light-mode .welcome-container::before {
+            filter: invert(0.55);
+            opacity: 0.06;
+        }
+
+        .dark-mode .welcome-container::before {
+            filter: invert(0.85);
+            opacity: 0.08;
         }
 
         .welcome-content {
@@ -82,88 +132,94 @@
             align-items: center;
         }
 
-        .welcome-logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .welcome-logo {
-            width: 4rem;
-            height: 4rem;
-        }
-
-        .welcome-title {
-            font-size: 1.6rem;
-            font-weight: 400;
-            margin: 1rem 0 1.5rem 0;
-            color: var(--color-text);
-            opacity: 0.85;
-        }
-
-        /* Input area */
-        .welcome-input-wrapper {
-            display: flex;
-            align-items: flex-end;
-            gap: 0.5rem;
+        /* Action Cards */
+        .welcome-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
             width: 100%;
-            max-width: 600px;
-            background: var(--color-message-bg);
+            max-width: 580px;
+        }
+
+        .welcome-action-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 24px 12px;
+            background: var(--color-panel);
             border: 1px solid var(--color-border);
-            border-radius: var(--border-radius);
-            padding: 0.75rem 0.75rem 0.75rem 1rem;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .welcome-input-wrapper:focus-within {
+        .welcome-action-card:hover {
+            background: var(--color-secondary);
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 12%, transparent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 15%, transparent);
         }
 
-        .welcome-input {
-            flex: 1;
-            border: none;
-            background: transparent;
+        .welcome-action-card:active {
+            transform: translateY(0);
+        }
+
+        .welcome-action-icon {
+            font-size: 1.75rem;
+            color: var(--color-primary);
+        }
+
+        .welcome-action-title {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin: 0;
             color: var(--color-text);
-            font-family: var(--font-family-main);
-            font-size: 1rem;
-            resize: none;
-            outline: none;
-            line-height: 1.5;
-            max-height: 8rem;
-            overflow-y: auto;
         }
 
-        .welcome-input::placeholder {
-            color: var(--color-text-muted);
-            opacity: 0.6;
+        /* Actions footer */
+        .welcome-actions-footer {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
         }
 
-        .welcome-send-btn {
-            width: 2.25rem;
-            height: 2.25rem;
-            border-radius: 50%;
-            border: none;
-            background: var(--color-primary);
-            color: white;
+        .welcome-refresh-button {
             display: flex;
             align-items: center;
             justify-content: center;
+            background: transparent;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            color: var(--color-text-muted);
             cursor: pointer;
-            flex-shrink: 0;
-            transition: background-color 0.15s ease, transform 0.1s ease;
+            padding: 6px 10px;
+            transition: all 0.2s ease;
         }
 
-        .welcome-send-btn:hover {
-            filter: brightness(0.9);
+        .welcome-refresh-button:hover {
+            background: var(--color-panel);
+            color: var(--color-text);
+            border-color: var(--color-primary);
         }
 
-        .welcome-send-btn:active {
-            transform: scale(0.92);
+        .welcome-refresh-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .welcome-send-btn .material-symbols-outlined {
-            font-size: 1.2rem;
+        .welcome-refresh-button .material-symbols-outlined {
+            font-size: 1.1rem;
+        }
+
+        @keyframes welcome-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .welcome-spin {
+            animation: welcome-spin 1s linear infinite;
         }
 
         /* Banner Styles */
@@ -171,9 +227,9 @@
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
-            max-width: 600px;
+            max-width: 580px;
             width: 100%;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .welcome-banner {
@@ -280,21 +336,30 @@
                 padding-top: 3rem;
             }
 
-            .welcome-logo {
-                width: 3rem;
-                height: 3rem;
-            }
-
-            .welcome-title {
-                font-size: 1.3rem;
-            }
-
-            .welcome-input-wrapper {
+            .welcome-actions {
+                grid-template-columns: repeat(2, 1fr);
                 max-width: 100%;
             }
 
             .welcome-banners {
                 max-width: 100%;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .welcome-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-action-card {
+                flex-direction: row;
+                padding: 14px 16px;
+                gap: 12px;
+                justify-content: flex-start;
+            }
+
+            .welcome-action-icon {
+                font-size: 1.4rem;
             }
         }
     </style>

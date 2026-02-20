@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cowork UI Design Preview - Complete</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        /* ============================================
+           DESIGN TOKENS
+           ============================================ */
+        :root {
+            /* Luxury Color Palette */
+            --color-navy: #192A56;
+            --color-navy-dark: #0F1A36;
+            --color-navy-light: #1E3160;
+            --color-navy-lighter: #24355F;
+            --color-champagne: #F7D794;
+            --color-champagne-soft: #E8D4A8;
+            --color-champagne-dark: #C4A76A;
+            --color-rose: #EDA6A3;
+            --color-rose-soft: #D48A87;
+            --color-rose-dark: #C98A87;
+            --color-pearl: #FCFBFB;
+            --color-pearl-dark: #F5F5F5;
+            
+            /* Semantic Colors - DARK MODE (default) */
+            --color-bg: var(--color-navy-dark);
+            --color-surface: var(--color-navy);
+            --color-surface-hover: rgba(247, 215, 148, 0.08);
+            --color-surface-elevated: var(--color-navy-light);
+            --color-text: var(--color-pearl);
+            --color-text-secondary: rgba(252, 251, 251, 0.65);
+            --color-text-muted: rgba(252, 251, 251, 0.45);
+            --color-accent: var(--color-rose);
+            --color-accent-hover: var(--color-rose-soft);
+            --color-border: rgba(247, 215, 148, 0.12);
+            --color-border-hover: rgba(247, 215, 148, 0.25);
+            --color-glow: rgba(237, 166, 163, 0.3);
+            
+            /* Status Colors */
+            --color-success: #22c55e;
+            --color-warning: #fbbf24;
+            --color-error: #ef5350;
+            --color-info: #38bdf8;
+            
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Roboto Mono', monospace;
+            
+            --text-xs: 0.75rem;
+            --text-sm: 0.875rem;
+            --text-base: 1rem;
+            --text-lg: 1.125rem;
+            --text-xl: 1.25rem;
+            --text-2xl: 1.5rem;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            
+            /* Radii */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 20px var(--color-glow);
+            
+            /* Layout */
+            --sidebar-width: 300px;
+            --sidebar-collapsed: 72px;
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* LIGHT MODE */
+        [data-theme="light"] {
+            --color-bg: var(--color-pearl);
+            --color-surface: var(--color-pearl-dark);
+            --color-surface-hover: rgba(25, 42, 86, 0.06);
+            --color-surface-elevated: white;
+            --color-text: var(--color-navy);
+            --color-text-secondary: rgba(25, 42, 86, 0.7);
+            --color-text-muted: rgba(25, 42, 86, 0.5);
+            --color-border: rgba(25, 42, 86, 0.1);
+            --color-border-hover: rgba(25, 42, 86, 0.2);
+            --color-glow: rgba(237, 166, 163, 0.2);
+            
+            --shadow-sm: 0 1px 2px rgba(25, 42, 86, 0.08);
+            --shadow-md: 0 4px 6px -1px rgba(25, 42, 86, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(25, 42, 86, 0.12);
+        }
+        
+        /* ============================================
+           BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--color-bg);
+            color: var(--color-text);
+            height: 100vh;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+        
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { 
+            background: var(--color-border); 
+            border-radius: var(--radius-full); 
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-border-hover); }
+        
+        /* ============================================
+           LAYOUT
+           ============================================ */
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+        
+        /* ============================================
+           SIDEBAR
+           ============================================ */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-navy-dark) 100%);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            transition: width var(--transition-base);
+            position: relative;
+            z-index: 100;
+        }
+        
+        [data-theme="light"] .sidebar {
+            background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-pearl-dark) 100%);
+        }
+        
+        .sidebar.collapsed {
+            width: var(--sidebar-collapsed);
+        }
+        
+        /* ========== HEADER SECTION ========== */
+        .sidebar-header {
+            padding: var(--space-4);
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+        
+        .btn-toggle-sidebar {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-surface-hover);
+            color: var(--color-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn-toggle-sidebar:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+        
+        .sidebar.collapsed .btn-toggle-sidebar {
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-champagne) 0%, var(--color-rose) 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--color-navy-dark);
+            font-size: var(--text-lg);
+        }
+        
+        .logo-text {
+            font-size: var(--text-lg);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-champagne) 0%, var(--color-rose) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .sidebar.collapsed .logo-text {
+            display: none;
+        }
+        
+        /* ========== QUICK ACTIONS ========== */
+        .quick-actions-bar {
+            display: flex;
+            gap: var(--space-1);
+        }
+        
+        .sidebar.collapsed .quick-actions-bar {
+            flex-direction: column;
+        }
+        
+        .btn-quick {
+            flex: 1;
+            height: 36px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            background: var(--color-surface-hover);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+        
+        .btn-quick:hover {
+            background: var(--color-surface-hover);
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+            transform: translateY(-1px);
+        }
+        
+        .btn-quick.active {
+            background: rgba(237, 166, 163, 0.15);
+            border-color: var(--color-rose);
+            color: var(--color-rose);
+        }
+        
+        .btn-quick .material-symbols-outlined {
+            font-size: 20px;
+        }
+        
+        .sidebar.collapsed .btn-quick span:not(.material-symbols-outlined) {
+            display: none;
+        }
+        
+        /* Dropdown */
+        .quick-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: var(--space-2);
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 200;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .quick-dropdown.show {
+            display: block;
+        }
+        
+        .dropdown-header {
+            padding: var(--space-2) var(--space-3);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-text-muted);
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            color: var(--color-text);
+            font-size: var(--text-sm);
+            cursor: pointer;
+            transition: background var(--transition-fast);
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--color-surface-hover);
+        }
+        
+        .dropdown-item .material-symbols-outlined {
+            font-size: 18px;
+            color: var(--color-text-secondary);
+        }
+        
+        /* ========== SIDEBAR CONTENT ========== */
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-3);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+        
+        .sidebar.collapsed .sidebar-content {
+            display: none;
+        }
+        
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-2) var(--space-3);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+            user-select: none;
+        }
+        
+        .section-header:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text-secondary);
+        }
+        
+        .section-header .arrow {
+            transition: transform var(--transition-fast);
+        }
+        
+        .section-header.collapsed .arrow {
+            transform: rotate(-90deg);
+        }
+        
+        /* Chat List */
+        .chat-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: var(--space-2);
+        }
+        
+        .chat-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+        
+        .chat-item:hover {
+            background: var(--color-surface-hover);
+        }
+        
+        .chat-item.active {
+            background: rgba(237, 166, 163, 0.12);
+            border: 1px solid rgba(237, 166, 163, 0.25);
+        }
+        
+        .chat-icon {
+            color: var(--color-text-secondary);
+            font-size: 20px;
+        }
+        
+        .chat-item.active .chat-icon {
+            color: var(--color-accent);
+        }
+        
+        .chat-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .chat-title {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--color-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .chat-meta {
+            font-size: var(--text-xs);
+            color: var(--color-text-muted);
+        }
+        
+        .chat-actions {
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+        }
+        
+        .chat-item:hover .chat-actions {
+            opacity: 1;
+        }
+        
+        /* Tasks Section */
+        .tasks-section {
+            border-top: 1px solid var(--color-border);
+            padding-top: var(--space-3);
+        }
+        
+        .task-list {
+            margin-top: var(--space-2);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        
+        .task-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+            padding: var(--space-3);
+            background: var(--color-surface-hover);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: 1px solid transparent;
+        }
+        
+        .task-item:hover {
+            border-color: var(--color-border-hover);
+        }
+        
+        .task-item.selected {
+            border-color: var(--color-rose);
+            background: rgba(237, 166, 163, 0.08);
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        
+        .task-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-success);
+        }
+        
+        .task-dot.running {
+            background: var(--color-accent);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .task-name {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .task-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .task-badge {
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .task-badge.idle {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--color-success);
+        }
+        
+        .task-badge.running {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--color-info);
+        }
+        
+        .task-actions {
+            display: flex;
+            gap: var(--space-1);
+        }
+        
+        /* ========== SIDEBAR FOOTER ========== */
+        .sidebar-footer {
+            border-top: 1px solid var(--color-border);
+            padding: var(--space-3);
+        }
+        
+        .sidebar.collapsed .sidebar-footer {
+            padding: var(--space-2);
+        }
+        
+        /* Preferences */
+        .preferences-section {
+            margin-bottom: var(--space-3);
+        }
+        
+        .pref-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-2) var(--space-3);
+            font-size: var(--text-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .pref-header:hover {
+            background: var(--color-surface-hover);
+        }
+        
+        .pref-content {
+            padding: var(--space-2) 0;
+        }
+        
+        .pref-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-2) var(--space-3);
+            font-size: var(--text-sm);
+            color: var(--color-text-secondary);
+        }
+        
+        /* Toggle Switch */
+        .toggle {
+            width: 44px;
+            height: 24px;
+            background: var(--color-border);
+            border-radius: var(--radius-full);
+            position: relative;
+            cursor: pointer;
+            transition: background var(--transition-fast);
+        }
+        
+        .toggle.active {
+            background: var(--color-accent);
+        }
+        
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform var(--transition-fast);
+        }
+        
+        .toggle.active::after {
+            transform: translateX(20px);
+        }
+        
+        /* Version Info */
+        .version-info {
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+            font-size: var(--text-xs);
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+        }
+        
+        .sidebar.collapsed .version-info {
+            font-size: 10px;
+        }
+        
+        .sidebar.collapsed .preferences-section {
+            display: none;
+        }
+        
+        /* Collapsed Footer Icons */
+        .collapsed-icons {
+            display: none;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        
+        .sidebar.collapsed .collapsed-icons {
+            display: flex;
+        }
+        
+        .collapsed-icon-btn {
+            width: 100%;
+            height: 40px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: transparent;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .collapsed-icon-btn:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+        
+        /* ============================================
+           MAIN CONTENT
+           ============================================ */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            z-index: 50;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-surface);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .theme-toggle:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        /* ============================================
+           WELCOME SCREEN
+           ============================================ */
+        .welcome-screen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-8);
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .welcome-screen::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(237, 166, 163, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(247, 215, 148, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 720px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Action Cards */
+        .welcome-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-3);
+            width: 100%;
+            margin-bottom: var(--space-8);
+        }
+        
+        .action-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-3);
+            padding: var(--space-6) var(--space-4);
+            background: rgba(25, 42, 86, 0.4);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        [data-theme="light"] .action-card {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(25, 42, 86, 0.1);
+        }
+        
+        .action-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-rose);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(237, 166, 163, 0.3),
+                var(--shadow-glow);
+        }
+        
+        .action-icon {
+            font-size: 2rem;
+            color: var(--color-champagne);
+            transition: all var(--transition-base);
+        }
+        
+        .action-card:hover .action-icon {
+            transform: scale(1.15);
+            color: var(--color-rose);
+        }
+        
+        .action-title {
+            font-size: var(--text-sm);
+            font-weight: 500;
+            color: var(--color-text);
+        }
+        
+        /* Welcome Title */
+        .welcome-title {
+            font-size: var(--text-2xl);
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-8);
+            text-align: center;
+        }
+        
+        .welcome-title strong {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+        
+        /* Chat Input */
+        .chat-input-area {
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .input-wrapper {
+            background: rgba(25, 42, 86, 0.5);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-4);
+            display: flex;
+            align-items: flex-end;
+            gap: var(--space-3);
+            transition: all var(--transition-base);
+            backdrop-filter: blur(10px);
+        }
+        
+        [data-theme="light"] .input-wrapper {
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .input-wrapper:focus-within {
+            border-color: var(--color-rose);
+            box-shadow: 
+                0 0 0 3px rgba(237, 166, 163, 0.15),
+                var(--shadow-lg);
+        }
+        
+        .input-field {
+            flex: 1;
+        }
+        
+        .input-field textarea {
+            width: 100%;
+            min-height: 24px;
+            max-height: 200px;
+            border: none;
+            background: transparent;
+            color: var(--color-text);
+            font-family: var(--font-family);
+            font-size: var(--text-base);
+            resize: none;
+            outline: none;
+            line-height: 1.6;
+        }
+        
+        .input-field textarea::placeholder {
+            color: var(--color-text-muted);
+        }
+        
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            color: var(--color-text-secondary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn-icon:hover {
+            background: var(--color-surface-hover);
+            color: var(--color-text);
+        }
+        
+        .btn-send {
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: var(--radius-lg);
+            background: var(--color-surface-elevated);
+            color: var(--color-text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn-send.active {
+            background: linear-gradient(135deg, var(--color-rose) 0%, var(--color-rose-soft) 100%);
+            color: white;
+            box-shadow: 0 4px 14px rgba(237, 166, 163, 0.4);
+        }
+        
+        .btn-send.active:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-2);
+            margin-top: var(--space-4);
+            flex-wrap: wrap;
+        }
+        
+        .quick-action {
+            padding: var(--space-2) var(--space-4);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-full);
+            background: transparent;
+            color: var(--color-text-secondary);
+            font-size: var(--text-xs);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+        
+        .quick-action:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+            background: rgba(237, 166, 163, 0.08);
+        }
+        
+        /* ============================================
+           CHAT VIEW
+           ============================================ */
+        .chat-view {
+            flex: 1;
+            overflow-y: auto;
+            padding: var(--space-8) var(--space-6);
+            display: none;
+        }
+        
+        .chat-view.active {
+            display: block;
+        }
+        
+        .messages {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+        
+        .message {
+            display: flex;
+            gap: var(--space-4);
+            max-width: 85%;
+        }
+        
+        .message.user {
+            margin-left: auto;
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--text-sm);
+            flex-shrink: 0;
+        }
+        
+        .message.ai .message-avatar {
+            background: linear-gradient(135deg, var(--color-champagne) 0%, var(--color-rose) 100%);
+            color: var(--color-navy-dark);
+        }
+        
+        .message.user .message-avatar {
+            background: var(--color-surface-elevated);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+        
+        .message-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+        
+        .message-bubble {
+            padding: var(--space-4) var(--space-5);
+            border-radius: var(--radius-xl);
+            line-height: 1.6;
+        }
+        
+        .message.ai .message-bubble {
+            background: rgba(25, 42, 86, 0.4);
+            border: 1px solid var(--color-border);
+            border-top-left-radius: var(--space-1);
+        }
+        
+        [data-theme="light"] .message.ai .message-bubble {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(25, 42, 86, 0.1);
+        }
+        
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, var(--color-rose) 0%, var(--color-rose-soft) 100%);
+            color: white;
+            border-top-right-radius: var(--space-1);
+        }
+        
+        .message-meta {
+            font-size: var(--text-xs);
+            color: var(--color-text-muted);
+            padding: 0 var(--space-2);
+        }
+        
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1200px) {
+            .welcome-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --sidebar-width: 260px;
+            }
+            
+            .welcome-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-card {
+                flex-direction: row;
+                justify-content: flex-start;
+                padding: var(--space-4);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- ============================================
+             SIDEBAR - MIT ALLEN FUNKTIONEN
+             ============================================ -->
+        <aside class="sidebar" id="sidebar">
+            
+            <!-- HEADER SECTION -->
+            <div class="sidebar-header">
+                <!-- Header Icons: Toggle + Logo -->
+                <div class="header-icons">
+                    <button class="btn-toggle-sidebar" onclick="toggleSidebar()" title="Sidebar ein-/ausklappen">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    
+                    <div class="logo">
+                        <div class="logo-icon">C</div>
+                        <span class="logo-text">Cowork</span>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions: 5 Icons -->
+                <div class="quick-actions-bar">
+                    <button class="btn-quick active" title="Dashboard" onclick="showToast('Dashboard')">
+                        <span class="material-symbols-outlined">home</span>
+                    </button>
+                    <button class="btn-quick" title="Memory" onclick="showToast('Memory')">
+                        <span class="material-symbols-outlined">psychology</span>
+                    </button>
+                    <button class="btn-quick" title="Scheduler" onclick="showToast('Scheduler')">
+                        <span class="material-symbols-outlined">schedule</span>
+                    </button>
+                    <button class="btn-quick" title="Settings" onclick="showToast('Settings')">
+                        <span class="material-symbols-outlined">settings</span>
+                    </button>
+                    <button class="btn-quick" title="More" onclick="toggleDropdown(this)">
+                        <span class="material-symbols-outlined">expand_more</span>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="quick-dropdown">
+                            <div class="dropdown-header">Navigation</div>
+                            <button class="dropdown-item" onclick="showToast('Projects')">
+                                <span class="material-symbols-outlined">snippet_folder</span>
+                                <span>Projects</span>
+                            </button>
+                            <button class="dropdown-item" onclick="showToast('New Chat')">
+                                <span class="material-symbols-outlined">edit_square</span>
+                                <span>New Chat</span>
+                            </button>
+                            <button class="dropdown-item" onclick="showToast('Load Chat')">
+                                <span class="material-symbols-outlined">folder_open</span>
+                                <span>Load Chat</span>
+                            </button>
+                            <div class="dropdown-header" style="margin-top: var(--space-2);">Chat Actions</div>
+                            <button class="dropdown-item" onclick="showToast('Save Chat')">
+                                <span class="material-symbols-outlined">save</span>
+                                <span>Save Chat</span>
+                            </button>
+                            <button class="dropdown-item" onclick="showToast('Clear Chat')">
+                                <span class="material-symbols-outlined">delete_sweep</span>
+                                <span>Clear Chat</span>
+                            </button>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- SIDEBAR CONTENT -->
+            <div class="sidebar-content">
+                
+                <!-- CHATS SECTION -->
+                <div class="chats-section">
+                    <div class="section-header" onclick="toggleSection(this, 'chats')">
+                        <span>Chats</span>
+                        <span class="material-symbols-outlined arrow">expand_more</span>
+                    </div>
+                    
+                    <div class="chat-list" id="chats-list">
+                        <div class="chat-item active" onclick="selectChat(this)">
+                            <span class="material-symbols-outlined chat-icon">chat_bubble</span>
+                            <div class="chat-info">
+                                <span class="chat-title">UI Design Review</span>
+                                <span class="chat-meta">2 Minuten ago</span>
+                            </div>
+                            <button class="chat-actions btn-icon" onclick="event.stopPropagation(); showToast('Chat Actions')">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                        
+                        <div class="chat-item" onclick="selectChat(this)">
+                            <span class="material-symbols-outlined chat-icon">chat_bubble</span>
+                            <div class="chat-info">
+                                <span class="chat-title">API Integration Plan</span>
+                                <span class="chat-meta">1 Stunde ago</span>
+                            </div>
+                            <button class="chat-actions btn-icon" onclick="event.stopPropagation(); showToast('Chat Actions')">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                        
+                        <div class="chat-item" onclick="selectChat(this)">
+                            <span class="material-symbols-outlined chat-icon">chat_bubble</span>
+                            <div class="chat-info">
+                                <span class="chat-title">Database Schema Design</span>
+                                <span class="chat-meta">Gestern</span>
+                            </div>
+                            <button class="chat-actions btn-icon" onclick="event.stopPropagation(); showToast('Chat Actions')">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                        
+                        <div class="chat-item" onclick="selectChat(this)">
+                            <span class="material-symbols-outlined chat-icon">chat_bubble</span>
+                            <div class="chat-info">
+                                <span class="chat-title">Bug Fix: Authentication</span>
+                                <span class="chat-meta">Gestern</span>
+                            </div>
+                            <button class="chat-actions btn-icon" onclick="event.stopPropagation(); showToast('Chat Actions')">
+                                <span class="material-symbols-outlined">more_vert</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- TASKS SECTION -->
+                <div class="tasks-section">
+                    <div class="section-header" onclick="toggleSection(this, 'tasks')">
+                        <span>Tasks</span>
+                        <span class="material-symbols-outlined arrow">expand_more</span>
+                    </div>
+                    
+                    <div class="task-list" id="tasks-list">
+                        <div class="task-item selected" onclick="selectTask(this)">
+                            <div class="task-header">
+                                <span class="task-dot running"></span>
+                                <span class="task-name">Server Monitoring</span>
+                            </div>
+                            <div class="task-footer">
+                                <span class="task-badge running">running</span>
+                                <div class="task-actions">
+                                    <button class="btn-icon" style="width: 28px; height: 28px;" onclick="event.stopPropagation(); showToast('Task Info')">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">info</span>
+                                    </button>
+                                    <button class="btn-icon" style="width: 28px; height: 28px;" onclick="event.stopPropagation(); showToast('Delete Task')">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="task-item" onclick="selectTask(this)">
+                            <div class="task-header">
+                                <span class="task-dot" style="background: var(--color-success);"></span>
+                                <span class="task-name">Daily Backup</span>
+                            </div>
+                            <div class="task-footer">
+                                <span class="task-badge idle">idle</span>
+                                <div class="task-actions">
+                                    <button class="btn-icon" style="width: 28px; height: 28px;" onclick="event.stopPropagation(); showToast('Task Info')">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">info</span>
+                                    </button>
+                                    <button class="btn-icon" style="width: 28px; height: 28px;" onclick="event.stopPropagation(); showToast('Delete Task')">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- SIDEBAR FOOTER -->
+            <div class="sidebar-footer">
+                
+                <!-- Preferences (nicht collapsed) -->
+                <div class="preferences-section">
+                    <div class="pref-header" onclick="toggleSection(this, 'prefs')">
+                        <span>Preferences</span>
+                        <span class="material-symbols-outlined arrow">expand_more</span>
+                    </div>
+                    
+                    <div class="pref-content" id="prefs-list">
+                        <div class="pref-item">
+                            <span>Auto-scroll</span>
+                            <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                        </div>
+                        <div class="pref-item">
+                            <span>Notifications</span>
+                            <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                        </div>
+                        <div class="pref-item">
+                            <span>Compact Mode</span>
+                            <div class="toggle" onclick="this.classList.toggle('active')"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Collapsed Icons (nur wenn collapsed) -->
+                <div class="collapsed-icons">
+                    <button class="collapsed-icon-btn" title="Settings" onclick="showToast('Settings')">
+                        <span class="material-symbols-outlined">settings</span>
+                    </button>
+                    <button class="collapsed-icon-btn" title="Theme" onclick="toggleTheme()">
+                        <span class="material-symbols-outlined" id="collapsed-theme-icon">light_mode</span>
+                    </button>
+                </div>
+                
+                <!-- Version Info -->
+                <div class="version-info">
+                    v0.9.8 • 2025-02-20
+                </div>
+                
+            </div>
+        </aside>
+        
+        <!-- ============================================
+             MAIN CONTENT
+             ============================================ -->
+        <main class="main">
+            
+            <!-- Theme Toggle -->
+            <button class="theme-toggle" onclick="toggleTheme()" title="Theme wechseln">
+                <span class="material-symbols-outlined" id="main-theme-icon">light_mode</span>
+            </button>
+            
+            <!-- WELCOME SCREEN -->
+            <div class="welcome-screen" id="welcome-screen">
+                <div class="welcome-content">
+                    
+                    <!-- Action Cards -->
+                    <div class="welcome-actions">
+                        <div class="action-card" onclick="startChat('new')">
+                            <span class="material-symbols-outlined action-icon">add_circle</span>
+                            <span class="action-title">New Chat</span>
+                        </div>
+                        <div class="action-card" onclick="startChat('projects')">
+                            <span class="material-symbols-outlined action-icon">folder</span>
+                            <span class="action-title">Projects</span>
+                        </div>
+                        <div class="action-card" onclick="startChat('memory')">
+                            <span class="material-symbols-outlined action-icon">memory</span>
+                            <span class="action-title">Memory</span>
+                        </div>
+                        <div class="action-card" onclick="startChat('scheduler')">
+                            <span class="material-symbols-outlined action-icon">schedule</span>
+                            <span class="action-title">Scheduler</span>
+                        </div>
+                        <div class="action-card" onclick="startChat('settings')">
+                            <span class="material-symbols-outlined action-icon">settings</span>
+                            <span class="action-title">Settings</span>
+                        </div>
+                        <div class="action-card" onclick="startChat('files')">
+                            <span class="material-symbols-outlined action-icon">folder_open</span>
+                            <span class="action-title">Files</span>
+                        </div>
+                        <div class="action-card" onclick="startChat('website')">
+                            <span class="material-symbols-outlined action-icon">language</span>
+                            <span class="action-title">Website</span>
+                        </div>
+                        <div class="action-card" onclick="startChat('github')">
+                            <span class="material-symbols-outlined action-icon">code</span>
+                            <span class="action-title">GitHub</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Welcome Title -->
+                    <h1 class="welcome-title">
+                        Was kann ich für dich <strong>tun?</strong>
+                    </h1>
+                    
+                    <!-- Chat Input -->
+                    <div class="chat-input-area">
+                        <div class="input-wrapper">
+                            <button class="btn-icon" title="Datei anhängen">
+                                <span class="material-symbols-outlined">attach_file</span>
+                            </button>
+                            <button class="btn-icon" title="Spracheingabe">
+                                <span class="material-symbols-outlined">mic</span>
+                            </button>
+                            
+                            <div class="input-field">
+                                <textarea placeholder="Nachricht an Cowork..." rows="1" id="main-input"></textarea>
+                            </div>
+                            
+                            <button class="btn-send" id="send-btn" onclick="sendMessage()">
+                                <span class="material-symbols-outlined">arrow_upward</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="quick-actions">
+                            <button class="quick-action">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">code</span>
+                                Code erklären
+                            </button>
+                            <button class="quick-action">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">auto_fix_high</span>
+                                Optimieren
+                            </button>
+                            <button class="quick-action">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">bug_report</span>
+                                Debuggen
+                            </button>
+                            <button class="quick-action">
+                                <span class="material-symbols-outlined" style="font-size: 14px;">translate</span>
+                                Übersetzen
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- CHAT VIEW -->
+            <div class="chat-view" id="chat-view">
+                <div class="messages">
+                    
+                    <div class="message user">
+                        <div class="message-avatar">DU</div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                Kannst du mir helfen, das UI Design zu verbessern? Ich möchte ein modernes, elegantes Design mit allen bestehenden Funktionen.
+                            </div>
+                            <div class="message-meta">14:32</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message ai">
+                        <div class="message-avatar">AI</div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                Absolut! Ich habe das Design überarbeitet und dabei ALLE bestehenden Funktionen erhalten:
+                                <br><br>
+                                <strong>✓ Header Icons</strong> (Menu Toggle + Logo)<br>
+                                <strong>✓ Quick Actions</strong> (5 Icons mit Dropdown)<br>
+                                <strong>✓ Chats List</strong> (mit Collapsible)<br>
+                                <strong>✓ Tasks Section</strong> (mit Status Badges)<br>
+                                <strong>✓ Preferences</strong> (mit Toggle Switches)<br>
+                                <strong>✓ Version Info</strong>
+                            </div>
+                            <div class="message-meta">14:32 • Cowork</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </main>
+    </div>
+    
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            
+            const iconName = newTheme === 'light' ? 'dark_mode' : 'light_mode';
+            document.getElementById('main-theme-icon').textContent = iconName;
+            document.getElementById('collapsed-theme-icon').textContent = iconName;
+            
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const initialIcon = savedTheme === 'light' ? 'dark_mode' : 'light_mode';
+        document.getElementById('main-theme-icon').textContent = initialIcon;
+        
+        // Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+        
+        // Section Toggle (Collapsible)
+        function toggleSection(header, section) {
+            header.classList.toggle('collapsed');
+            const list = document.getElementById(section + '-list');
+            if (list) {
+                list.style.display = header.classList.contains('collapsed') ? 'none' : 'flex';
+            }
+        }
+        
+        // Dropdown Toggle
+        function toggleDropdown(btn) {
+            const dropdown = btn.querySelector('.quick-dropdown');
+            dropdown.classList.toggle('show');
+            
+            // Close when clicking outside
+            document.addEventListener('click', function closeDropdown(e) {
+                if (!btn.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            });
+        }
+        
+        // Chat Selection
+        function selectChat(element) {
+            document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('chat-view').classList.add('active');
+        }
+        
+        // Task Selection
+        function selectTask(element) {
+            document.querySelectorAll('.task-item').forEach(item => item.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+        
+        // Start Chat
+        function startChat(type) {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('chat-view').classList.add('active');
+        }
+        
+        // Send Message
+        function sendMessage() {
+            const input = document.getElementById('main-input');
+            if (input.value.trim()) {
+                document.getElementById('welcome-screen').style.display = 'none';
+                document.getElementById('chat-view').classList.add('active');
+                input.value = '';
+            }
+        }
+        
+        // Auto-resize textarea
+        const textarea = document.getElementById('main-input');
+        const sendBtn = document.getElementById('send-btn');
+        
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+            sendBtn.classList.toggle('active', this.value.trim().length > 0);
+        });
+        
+        textarea.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // Toast notification
+        function showToast(message) {
+            // Simple alert for demo - in real app would be a toast
+            console.log(message);
+        }
+    </script>
+</body>
+</html>
