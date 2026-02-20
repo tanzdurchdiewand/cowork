@@ -1,277 +1,318 @@
-# Coworker - Refactoring Plan
+# Cowork UI Redesign - Implementierungsplan
 
-## Ziel
-Eine saubere, einfache Chat-App mit Sidebar (Projekte + Chats + Tasks), einem aufgeräumten Chat-Bereich und nur den nötigen Einstellungen. Der Agent fühlt sich wie ein **Teammitglied** an, nicht wie ein technisches Tool. Alle Agent-Funktionen bleiben im Backend vollständig erhalten.
-
-**Name:** Coworker
-**Branding:** Oranges "C" als Icon/Logo
-**Vorgehen:** Erst aufräumen (Phase 1-4), dann UI-Redesign als separates Projekt
+## 🎯 Ziel
+Modernes, elegantes UI-Design mit neuem Farbschema (Midnight Navy, Champagne, Dusty Rose) bei **vollständiger Erhaltung aller bestehenden Funktionen**.
 
 ---
 
-## 1. Settings vereinfachen
+## 📋 Anforderungen
 
-### Neue Tab-Struktur (4 Tabs statt 6):
+### MUST HAVE (Funktionen müssen erhalten bleiben)
 
-| Tab | Inhalt |
-|-----|--------|
-| **Agent** | Agent-Name/Beschreibung, Chat-Model (= Utility + Browser), Embedding-Model (separat), Memory-Config, Speech-Config (nur STT/Mikrofon), Workdir |
-| **API Keys** | Globale Model-API-Keys (OpenAI, Anthropic, Google, AssemblyAI etc.) - projektübergreifend |
-| **Skills** | Skills auflisten, importieren, verwalten |
-| **MCP** | Externe MCP-Server konfigurieren |
+#### Sidebar
+- [ ] Header Icons: Menu Toggle + Logo
+- [ ] Quick Actions: 5 Icons (Dashboard, Memory, Scheduler, Settings, Dropdown)
+- [ ] Quick Actions Dropdown: Projects, New Chat, Load Chat, Save Chat, Clear Chat
+- [ ] Chats List: Collapsible, Aktive-Auswahl, 3-Punkte-Menü
+- [ ] Tasks List: Collapsible, Status-Badges, Task-Aktionen
+- [ ] Preferences Panel: Dark Mode Toggle, Chat Width, Detail Mode, Speech
+- [ ] Version Info: Versionsnummer + Datum
 
-### Entfernen aus Settings:
-- [ ] **Developer Tab** komplett (WebSocket-Konsole, API-Testing)
-- [ ] **A2A Konfiguration** (aus MCP/A2A Tab)
-- [ ] **Backup & Restore Tab** komplett
-- [ ] **Tunnel / Flare** Konfiguration
-- [ ] **Update Checker**
-- [ ] **External API** Konfiguration
-- [ ] **Authentication** Settings
-- [ ] **LiteLLM** Settings
-- [ ] **Separate Utility Model** Konfiguration (wird Chat-Model)
-- [ ] **Separate Browser Model** Konfiguration (wird Chat-Model)
-- [ ] **Kokoro TTS Toggle** (TTS wird komplett entfernt)
+#### Chat-Bereich
+- [ ] Chat Top: Zeit/Datum, Sync Status, Project Selector
+- [ ] Input Area: Textarea, Send Button, Mic Button, Attachment
+- [ ] Bottom Actions: Pause/Resume, Save, Import, Files
+- [ ] Progress Bar: Fortschrittsanzeige + Navigation
+- [ ] Attachments: Drag & Drop Overlay, Preview
+- [ ] Message Queue: Warteschlange-Anzeige
 
-### Zusammenführen:
-- [ ] Chat-Model, Utility-Model und Browser-Model → **ein Model-Setting** ("Chat Model")
-- [ ] Embedding-Model bleibt als **separates Setting**
+#### Messages
+- [ ] User Messages: Rechtsbündig, eigener Stil
+- [ ] AI Messages: Links, verschiedene Typen (agent, tool, code-exe, etc.)
+- [ ] Process Groups: Expandable/Collapsible mit Animation
+- [ ] Badges: Status-Badges (GEN, END, USE, etc.)
+- [ ] Code Blocks: Syntax Highlighting, Copy Button
+- [ ] Tables: Markdown Tables Styling
 
----
+#### Modals
+- [ ] Settings: Tabs (Agent, External, MCP, Skills)
+- [ ] File Browser: Upload, Download, Rename, Navigate
+- [ ] File Editor: ACE Editor Integration
+- [ ] Memory Dashboard: Suche, Filter, Mass Actions
+- [ ] Scheduler: Task List, Editor, Detail View
+- [ ] Image Viewer: Zoom, Pan
+- [ ] Process Step Detail: KVPs, Raw JSON
 
-## 2. Chat-UI aufräumen
+#### Projects
+- [ ] Project Selector: Dropdown mit aktivem Projekt
+- [ ] Project List: Cards mit Farben
+- [ ] Project Create/Edit: Formular mit Tabs
 
-### Bottom Actions (vereinfacht):
-Behalten:
-- [x] Pause/Resume
-- [x] Save Chat
-- [x] Files (File Browser)
-- [x] Knowledge Import
-- [x] Speech (Mikrofon)
+#### Notifications
+- [ ] Notification Icons: Badge mit Counter
+- [ ] Notification Modal: Liste mit Details
+- [ ] Toast Stack: Popup-Benachrichtigungen
 
-Entfernen:
-- [ ] **Context Window Viewer** Button
-- [ ] **History Viewer** Button (JSON)
-- [ ] **Nudge** Button
-
-Verschieben:
-- [ ] **Clear Chat** → in Sidebar Quick Actions Menü
-
-### Message-Darstellung vereinfachen:
-- [ ] Technische Agent-Schritte (Tool-Calls, Code-Ausführung, Browser-Actions etc.) standardmäßig **zugeklappt** hinter einem einfachen "Arbeitet..."-Indikator
-- [ ] Nur das **Endergebnis** (Response) wird prominent angezeigt
-- [ ] Process Groups optional aufklappbar für Transparenz, aber default = zu
-- [ ] Weniger Message-Types sichtbar: User-Nachrichten + Agent-Antworten als Hauptansicht
-- [ ] Errors/Warnings vereinfacht darstellen (kein technisches Stack-Trace)
-
-### Weitere Chat-UI Änderungen:
-- [ ] **Message Queue Display** entfernen
-- [ ] **Process Step Detail Modal** (Raw JSON Ansicht) entfernen
-- [ ] Agent-Profil-Auswahl entfernen (keine Hacker/Researcher/Developer Profile)
+### SHOULD HAVE (Design-Verbesserungen)
+- [ ] Glassmorphism Effekte
+- [ ] Verbesserte Animationen
+- [ ] Neues Farbschema (60-30-10 Regel)
+- [ ] Bessere Typografie
+- [ ] Verbesserte Hover-States
 
 ---
 
-## 3. Speech umbauen
+## 🎨 Design-System (Neu)
 
-### TTS (Text-to-Speech) komplett entfernen:
-- [ ] `python/helpers/kokoro_tts.py` - Helper löschen
-- [ ] `python/api/synthesize.py` - API-Endpoint löschen
-- [ ] TTS-Logik aus `webui/components/chat/speech/speech-store.js` entfernen (~200 Zeilen)
-- [ ] Kokoro-Toggle aus `webui/components/settings/agent/speech.html` entfernen
-- [ ] Kokoro Dependencies aus `requirements.txt` entfernen (kokoro, soundfile, etc.)
-- [ ] TTS-bezogene Einstellungen aus `python/helpers/settings.py` entfernen
+### Farbschema
 
-### STT von Whisper auf AssemblyAI umstellen:
-- [ ] Neuen Helper erstellen: `python/helpers/assemblyai_stt.py`
-  - AssemblyAI REST API nutzen (Audio upload → Transkription)
-  - Einfache Aufnahme (kein Real-Time Streaming)
-- [ ] `python/api/transcribe.py` anpassen → AssemblyAI statt Whisper nutzen
-- [ ] `python/helpers/whisper.py` entfernen
-- [ ] `pip install assemblyai` zu requirements.txt hinzufügen
-- [ ] Whisper Dependencies aus `requirements.txt` entfernen
-- [ ] AssemblyAI API-Key in die globalen API Keys aufnehmen
+```css
+/* Primary Colors */
+--color-navy: #192A56;
+--color-navy-dark: #0F1A36;
+--color-navy-light: #1E3160;
+--color-champagne: #F7D794;
+--color-rose: #EDA6A3;
+--color-pearl: #FCFBFB;
 
-### Speech-Settings danach:
-- Mikrofon-Auswahl (Gerät)
-- Sprache
-- Silence Threshold
-- Silence Duration
-- (AssemblyAI API-Key unter globalen API Keys)
-
----
-
-## 4. Branding → "Coworker"
-
-- [ ] "Cowork" → "Coworker" überall im UI umbenennen
-- [ ] Oranges "C" als Logo/Icon erstellen (SVG)
-- [ ] Sidebar-Header: Logo + "Coworker" Schriftzug
-- [ ] Welcome Screen: Neues Branding
-- [ ] Browser-Tab Titel → "Coworker"
-- [ ] Favicon → Oranges C
-- [ ] PWA Manifest (`manifest.json`) → Name, Icons, Theme-Color (Orange)
-
----
-
-## 5. Login entfernen
-
-- [ ] Login-Seite (`login.html`) entfernen oder bypassen
-- [ ] Authentication-Logik im Backend deaktivieren/entfernen
-- [ ] Direkt auf Chat-Interface laden
-- [ ] Logout-Button aus Sidebar entfernen
-
----
-
-## 6. Sidebar & Navigation
-
-### Behalten:
-- [x] Projekt-Selector (oben)
-- [x] Chat-Liste
-- [x] Task-Liste (Scheduler)
-- [x] Quick Actions (Dashboard, Memory, Scheduler, Settings + Clear Chat)
-- [x] Preferences (Theme etc.)
-
-### Aufräumen:
-- [ ] Sidebar Footer vereinfachen (Versionsnummer/technische Infos entfernen)
-- [ ] Clear Chat in Quick Actions verschieben
-
-### Welcome Screen:
-- [ ] Vereinfachen - nur relevante Quick Actions zeigen
-- [ ] Neues Branding einsetzen
-
----
-
-## 7. Modals die bleiben
-
-- [x] Memory Dashboard
-- [x] Scheduler
-- [x] File Browser
-- [x] Project Management (komplett mit Instructions, Memory, Secrets, Skills, File Structure)
-- [x] Settings (vereinfacht, 4 Tabs)
-- [x] Notifications
-- [x] Image Viewer
-- [x] Full-Screen Input
-
-### Modals die entfallen:
-- [ ] Context Window Modal
-- [ ] History Modal (JSON)
-- [ ] Process Step Detail Modal (JSON)
-
----
-
-## 8. Projekt-System (bleibt komplett)
-
-- [x] Name, Beschreibung, Farbe
-- [x] Custom Instructions
-- [x] Memory (isoliert pro Projekt)
-- [x] Secrets (projekt-spezifisch)
-- [x] Skills (pro Projekt zuweisbar)
-- [x] File Structure
-
-API Keys für Modelle sind **global** (nicht pro Projekt).
-
----
-
-## 9. Backend - KEINE funktionalen Änderungen
-
-Alle Agent-Funktionen bleiben vollständig erhalten:
-- Code-Ausführung (Python, Node.js, Shell)
-- Web-Suche (SearXNG)
-- Browser-Automation
-- Sub-Agents / Delegation
-- Memory (Save/Load/Delete/Forget)
-- Knowledge Base (FAISS + Embeddings)
-- Alle 19 Tools
-- Alle Extensions
-- Scheduler
-- File-Operationen
-- MCP Client
-- Skills
-
-Nur die API-Endpoints für entfernte Features werden bereinigt:
-- `/synthesize` (TTS) → entfernen
-- `/transcribe` → auf AssemblyAI umstellen
-- Auth-Endpoints → entfernen/deaktivieren
-
----
-
-## 10. Dependencies bereinigen
-
-### Entfernen:
-- [ ] Kokoro TTS (`kokoro`, `soundfile`, etc.)
-- [ ] Whisper (`whisper`, `openai-whisper`)
-- [ ] `transformers@3.0.2.js` im Frontend (748KB, nur für lokale ML-Inference)
-- [ ] Weitere unbenutzte Dependencies identifizieren
-
-### Hinzufügen:
-- [ ] `assemblyai` Python SDK
-
----
-
-## 11. Dateien-Übersicht
-
-### Hauptsächlich betroffene Frontend-Dateien:
-```
-webui/components/settings/          → Tabs reduzieren, Settings zusammenführen
-webui/components/chat/input/        → Bottom Actions aufräumen
-webui/components/chat/speech/       → TTS entfernen, STT vereinfachen
-webui/components/modals/            → Context, History, Process-Detail entfernen
-webui/components/messages/          → Process Groups default zugeklappt
-webui/components/welcome/           → Vereinfachen + Branding
-webui/components/sidebar/           → Footer aufräumen, Clear Chat verschieben
-webui/components/settings/agent/    → Speech Settings anpassen
-webui/js/messages.js                → Message-Rendering vereinfachen
-webui/index.html                    → Branding, Login entfernen
-webui/js/manifest.json              → PWA Branding
+/* Semantic (Dark Mode) */
+--color-bg: var(--color-navy-dark);
+--color-surface: var(--color-navy);
+--color-surface-hover: rgba(247, 215, 148, 0.08);
+--color-text: var(--color-pearl);
+--color-text-secondary: rgba(252, 251, 251, 0.65);
+--color-text-muted: rgba(252, 251, 251, 0.45);
+--color-accent: var(--color-rose);
+--color-border: rgba(247, 215, 148, 0.12);
 ```
 
-### Backend-Dateien:
-```
-python/helpers/kokoro_tts.py        → Löschen
-python/helpers/whisper.py           → Löschen
-python/helpers/assemblyai_stt.py    → Neu erstellen
-python/api/synthesize.py            → Löschen
-python/api/transcribe.py            → AssemblyAI Integration
-python/helpers/settings.py          → TTS Settings entfernen
-python/api/login.py                 → Deaktivieren/entfernen
-requirements.txt                    → Kokoro/Whisper raus, AssemblyAI rein
+### Layout-Variablen
+
+```css
+--sidebar-width: 280px;
+--sidebar-collapsed: 72px;
+--radius-sm: 8px;
+--radius-md: 12px;
+--radius-lg: 16px;
+--radius-xl: 20px;
 ```
 
 ---
 
-## Reihenfolge der Umsetzung
+## 🗂️ Implementierungs-Phasen
 
-### Phase 1: Settings vereinfachen
-- Tabs reduzieren (6 → 4)
-- Models zusammenführen (Chat = Utility = Browser)
-- Unnötige Settings entfernen
+### Phase 1: Foundation (Sicher)
+**Ziel:** Design Tokens einführen, bestehendes Design nicht brechen
 
-### Phase 2: Chat-UI aufräumen
-- Bottom Actions reduzieren
-- Technische Modals entfernen
-- Message-Darstellung vereinfachen (Process Groups default zu)
-- Message Queue Display entfernen
+| Datei | Änderungen |
+|-------|------------|
+| `webui/index.css` | Neue CSS-Variablen hinzufügen, bestehende behalten |
+| `webui/index.html` | Keine Änderungen |
 
-### Phase 3: Speech umbauen
-- TTS komplett entfernen
-- AssemblyAI Helper erstellen
-- Transcribe Endpoint umstellen
-- Speech Settings anpassen
+**Aufgaben:**
+1. Neue CSS-Variablen am Ende von `:root` hinzufügen
+2. Keine bestehenden Variablen entfernen
+3. Testen: Alles funktioniert noch?
 
-### Phase 4: Login & Auth entfernen
-- Login-Seite deaktivieren
-- Direkt auf Chat laden
-- Auth-Endpoints bereinigen
-
-### Phase 5: Branding "Coworker"
-- Cowork → Coworker umbenennen
-- Oranges "C" als Logo/Favicon/PWA-Icon
-- Welcome Screen + Sidebar anpassen
-- Sidebar Footer aufräumen
-- Dependencies bereinigen
-- Testen
+**Zeitschätzung:** 1-2 Stunden
+**Risiko:** Sehr niedrig
 
 ---
 
-## Danach: UI-Redesign (separates Projekt)
-Nach dem Aufräumen wird die UI visuell überarbeitet (Layout, Farben, Typografie, UX).
-Wird als eigener Plan erarbeitet sobald das Aufräumen abgeschlossen ist.
+### Phase 2: Sidebar Redesign (Kritisch)
+**Ziel:** Sidebar mit neuem Design, alle Funktionen erhalten
+
+| Komponente | Datei | Änderungen |
+|------------|-------|------------|
+| Left Sidebar | `components/sidebar/left-sidebar.html` | Neue Farben, Gradient-Hintergrund |
+| Header Icons | `components/sidebar/top-section/header-icons.html` | Neues Logo-Design, Toggle-Button Style |
+| Quick Actions | `components/sidebar/top-section/quick-actions.html` | Neue Button-Styles, Dropdown-Styling |
+| Chats List | `components/sidebar/chats/chats-list.html` | Neue Chat-Item Styles |
+| Tasks List | `components/sidebar/tasks/tasks-list.html` | Neue Task-Item Styles, Badges |
+| Preferences | `sidebar/bottom/preferences/preferences-panel.html` | Neue Toggle-Styles |
+| Sidebar Bottom | `components/sidebar/bottom/sidebar-bottom.html` | Footer-Styling |
+
+**Funktionen die erhalten bleiben müssen:**
+- `$store.sidebar.isOpen`, `isCollapsed`, `toggle()`
+- `$store.sidebar.isSectionOpen()`, `toggleSection()`
+- `$store.sidebar.updateDropdownPosition()`
+- `$store.chats.newChat()`, `selectChat()`, `killChat()`
+- `$store.tasks.selectTask()`, `openDetail()`, `reset()`, `deleteTask()`
+- Bootstrap Collapse für Sections
+- Alle Event Handler
+
+**Zeitschätzung:** 4-6 Stunden
+**Risiko:** Mittel (viele Interaktionen)
+
+---
+
+### Phase 3: Chat Input Bereich
+**Ziel:** Input-Bereich modernisieren
+
+| Komponente | Datei | Änderungen |
+|------------|-------|------------|
+| Chat Bar | `components/chat/input/chat-bar.html` | Neuer Container-Style |
+| Chat Bar Input | `components/chat/input/chat-bar-input.html` | Neue Input-Styles, Button-Styles |
+| Bottom Actions | `components/chat/input/bottom-actions.html` | Neue Button-Styles |
+| Progress | `components/chat/input/progress.html` | Progress-Bar Styling |
+| Attachments | `components/chat/attachments/*.html` | Preview-Styles |
+| Message Queue | `components/chat/message-queue/*.html` | Queue-Styles |
+
+**Funktionen die erhalten bleiben müssen:**
+- `$store.chatInput.sendMessage()`, `pauseAgent()`
+- `$store.speech.handleMicrophoneClick()`, `stop()`
+- `$store.chatAttachments`
+- `$store.messageQueue`
+- `$store.chatNavigation`
+- ACE Editor Integration (Full Screen Input)
+
+**Zeitschätzung:** 3-4 Stunden
+**Risiko:** Niedrig-Mittel
+
+---
+
+### Phase 4: Messages & Process Groups
+**Ziel:** Nachrichten-Design überarbeiten
+
+| Komponente | Datei | Änderungen |
+|------------|-------|------------|
+| Messages CSS | `css/messages.css` | Neue Message-Styles |
+| Process Group | `components/messages/process-group/*.css` | Neue Badge-Styles, Animationen |
+
+**Funktionen die erhalten bleiben müssen:**
+- `.message-user`, `.message-agent`, `.message-tool`, etc.
+- `.process-group` Expand/Collapse
+- `.step-badge` System (GEN, END, USE, etc.)
+- `.message-collapsible` mit Fade-Out
+- Smooth Render Animationen
+
+**Zeitschätzung:** 3-4 Stunden
+**Risiko:** Mittel (viele Message-Typen)
+
+---
+
+### Phase 5: Welcome Screen
+**Ziel:** Startbildschirm modernisieren
+
+| Komponente | Datei | Änderungen |
+|------------|-------|------------|
+| Welcome | `components/welcome/welcome-screen.html` | Neue Card-Styles, Input-Styles |
+
+**Funktionen die erhalten bleiben müssen:**
+- `$store.welcomeStore.executeAction()`
+- Banner-System (info, warning, error)
+- Action Cards Grid
+
+**Zeitschätzung:** 1-2 Stunden
+**Risiko:** Niedrig
+
+---
+
+### Phase 6: Modals
+**Ziel:** Modal-Grundstyling überarbeiten
+
+| Komponente | Datei | Änderungen |
+|------------|-------|------------|
+| Modals CSS | `css/modals.css` | Neue Modal-Styles |
+| Settings | `components/settings/settings.html` | Tab-Styles |
+| File Browser | `components/modals/file-browser/*.html` | List-Styles |
+| Memory | `components/modals/memory/*.html` | Table-Styles |
+| Scheduler | `components/modals/scheduler/*.html` | Form-Styles |
+
+**Funktionen die erhalten bleiben müssen:**
+- Alle Modal-Öffnungs-/Schließ-Logiken
+- `$store.*` für alle Modals
+- Form-Validierungen
+- ACE Editor in Context/File Editor
+
+**Zeitschätzung:** 4-6 Stunden
+**Risiko:** Mittel (viele Modals)
+
+---
+
+### Phase 7: Projects & Notifications
+**Ziel:** Restliche Komponenten
+
+| Komponente | Datei | Änderungen |
+|------------|-------|------------|
+| Projects | `components/projects/*.html` | Card-Styles, Form-Styles |
+| Notifications | `components/notifications/*.html` | Toast-Styles, Badge-Styles |
+| Sync | `components/sync/*.html` | Status-Icon-Styles |
+
+**Zeitschätzung:** 2-3 Stunden
+**Risiko:** Niedrig
+
+---
+
+### Phase 8: Testing & Polishing
+**Ziel:** Alles testen und fixen
+
+- [ ] Dark Mode funktioniert
+- [ ] Light Mode funktioniert
+- [ ] Sidebar Collapse funktioniert
+- [ ] Alle Modals öffnen/schließen
+- [ ] Chat-Verlauf wird korrekt angezeigt
+- [ ] Process Groups expand/collapse
+- [ ] Task-Status werden angezeigt
+- [ ] Preferences werden gespeichert
+- [ ] Mobile Ansicht (optional)
+
+**Zeitschätzung:** 2-4 Stunden
+**Risiko:** Unbekannt (Bugfixing)
+
+---
+
+## 📝 Checkliste pro Komponente
+
+Für jede geänderte Komponente muss geprüft werden:
+
+```markdown
+- [ ] HTML-Struktur unverändert (keine Elemente entfernt)
+- [ ] Alle `x-data` Attribute vorhanden
+- [ ] Alle `@click` Handler funktionieren
+- [ ] Alle `$store.*` Verbindungen funktionieren
+- [ ] Alle `x-show` / `x-if` Konditionen funktionieren
+- [ ] Bootstrap Collapse funktioniert (wo verwendet)
+- [ ] Neue CSS-Klassen sind spezifisch genug
+- [ ] Dark Mode sieht gut aus
+- [ ] Light Mode sieht gut aus
+```
+
+---
+
+## 🔄 Rollback-Strategie
+
+Falls etwas schiefgeht:
+
+1. **Git-History:** Alle Änderungen in einem separaten Branch
+2. **CSS-Backups:** Originale CSS-Dateien vorher kopieren
+3. **Inkrementell:** Phase für Phase commiten
+4. **Feature-Flags:** Neue Styles könnten hinter CSS-Variable versteckt werden
+
+---
+
+## 📊 Zeitschätzung Gesamt
+
+| Phase | Zeit | Risiko |
+|-------|------|--------|
+| Phase 1: Foundation | 1-2h | Sehr niedrig |
+| Phase 2: Sidebar | 4-6h | Mittel |
+| Phase 3: Chat Input | 3-4h | Niedrig-Mittel |
+| Phase 4: Messages | 3-4h | Mittel |
+| Phase 5: Welcome | 1-2h | Niedrig |
+| Phase 6: Modals | 4-6h | Mittel |
+| Phase 7: Projects/Notifications | 2-3h | Niedrig |
+| Phase 8: Testing | 2-4h | Unbekannt |
+| **Gesamt** | **20-31h** | **Mittel** |
+
+---
+
+## ✅ Freigabe
+
+Dieser Plan muss vom Benutzer freigegeben werden, bevor die Implementierung beginnt.
+
+**Fragen an den Benutzer:**
+1. Stimmt die Priorisierung der Phasen?
+2. Sollen wir mit Phase 1 beginnen?
+3. Sollen bestimmte Features anders priorisiert werden?
+4. Gibt es Design-Elemente, die anders aussehen sollen?
