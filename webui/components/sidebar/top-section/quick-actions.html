@@ -119,13 +119,13 @@
   /* Config button - icon only style */
   .config-button {
     background-color: var(--color-panel);
-    border: 0.05rem solid var(--color-border);
-    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--lux-radius-sm);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.8;
+    opacity: 0.85;
     padding: var(--spacing-xs);
     flex: 1;
     min-width: 0;
@@ -133,8 +133,9 @@
   }
 
   .config-button .material-symbols-outlined {
-    font-size: 22px;
-    transition: transform 0.2s ease;
+    font-size: 20px;
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: var(--color-text);
   }
 
   .config-button .material-symbols-outlined.rotated {
@@ -168,9 +169,31 @@
     position: relative;
   }
 
+  .config-button:hover .material-symbols-outlined {
+    color: var(--color-accent);
+  }
+
   .config-button:active {
-    opacity: 0.5;
-    transform: scale(0.95);
+    opacity: 0.6;
+    transform: scale(0.92);
+  }
+  
+  /* NEW DESIGN: Enhanced quick action buttons with accent glow */
+  .new-design .config-button {
+    background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-background) 100%);
+  }
+  
+  .new-design .config-button:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px rgba(237, 166, 163, 0.15);
+  }
+  
+  .new-design.light-mode .config-button:hover {
+    box-shadow: 0 0 10px rgba(226, 125, 96, 0.15);
+  }
+  
+  .new-design .config-button:hover .material-symbols-outlined {
+    transform: scale(1.1);
   }
 
   /* Dropdown specific positioning - fixed to escape overflow:hidden */
@@ -233,6 +256,73 @@
 
   .light-mode .config-button:hover { background-color: var(--color-background-hover); }
   .light-mode .config-button:active { background-color: var(--color-background-hover); }
+  
+  /* NEW DESIGN: Dropdown menu styling */
+  .new-design .quick-actions-dropdown {
+    background: var(--color-panel);
+    border: 1px solid var(--color-border);
+    border-radius: var(--lux-radius-md);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(237, 166, 163, 0.1);
+    padding: 8px;
+    min-width: 180px;
+  }
+  
+  .new-design.light-mode .quick-actions-dropdown {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(226, 125, 96, 0.1);
+  }
+  
+  .new-design .quick-actions-dropdown .dropdown-header {
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 8px 12px 4px;
+    margin: 0;
+  }
+  
+  .new-design .quick-actions-dropdown .dropdown-separator {
+    height: 1px;
+    background: var(--color-border);
+    margin: 8px 0;
+    opacity: 0.5;
+  }
+  
+  .new-design .quick-actions-dropdown .dropdown-item {
+    background: transparent;
+    border: none;
+    border-radius: var(--lux-radius-sm);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    width: 100%;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    text-align: left;
+  }
+  
+  .new-design .quick-actions-dropdown .dropdown-item:hover {
+    background: var(--color-background-hover);
+  }
+  
+  .new-design .quick-actions-dropdown .dropdown-item:hover .material-symbols-outlined {
+    color: var(--color-accent);
+    transform: scale(1.1);
+  }
+  
+  .new-design .quick-actions-dropdown .dropdown-item:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+  .new-design .quick-actions-dropdown .dropdown-item .material-symbols-outlined {
+    font-size: 18px;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+  }
 
   /* Transition helpers */
   .-translate-y-1 { transform: translateY(-0.25rem); }

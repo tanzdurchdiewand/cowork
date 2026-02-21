@@ -48,13 +48,28 @@
 
   <style>
         .text-buttons-row { width: 100%; display: flex; padding-top: var(--spacing-xs); margin-left: var(--spacing-xs); }
-        .text-button { background-color: transparent; border: none; border-radius: 5px; color: var(--color-text); font-family: "Rubik", Arial, Helvetica, sans-serif; font-size: 0.6rem; padding: 6px var(--spacing-sm); cursor: pointer; opacity: 0.8; -webkit-transition: all 0.3s; transition: all 0.3s; display: flex; align-items: center; gap: var(--spacing-xs); }
-        .text-button:hover:not(:disabled) { opacity: 1; background-color: var(--color-background-hover); border-radius: 4px; }
-        .text-button:active:not(:disabled) { opacity: 0.5; }
+        .text-button { background-color: transparent; border: 1px solid transparent; border-radius: var(--lux-radius-sm); color: var(--color-text); font-family: var(--font-family-main); font-size: 0.65rem; padding: 6px var(--spacing-sm); cursor: pointer; opacity: 0.7; -webkit-transition: all 0.2s ease; transition: all 0.2s ease; display: flex; align-items: center; gap: var(--spacing-xs); }
+        .text-button:hover:not(:disabled) { opacity: 1; background-color: var(--color-background-hover); border-color: var(--color-border); }
+        .text-button:hover:not(:disabled) svg, .text-button:hover:not(:disabled) .material-symbols-outlined { color: var(--color-accent); transform: scale(1.1); }
+        .text-button:active:not(:disabled) { opacity: 0.6; transform: scale(0.95); }
         .text-button:disabled { opacity: 0.4; cursor: not-allowed; }
-        .text-button svg { width: 14px; height: 14px; flex-shrink: 0; }
-        .text-button .material-symbols-outlined { font-size: 14px; flex-shrink: 0; }
+        .text-button svg { width: 14px; height: 14px; flex-shrink: 0; transition: all 0.2s ease; }
+        .text-button .material-symbols-outlined { font-size: 14px; flex-shrink: 0; transition: all 0.2s ease; }
         .text-button p { margin-block: 0; }
+        
+        /* NEW DESIGN: Enhanced bottom action buttons */
+        .new-design .text-button {
+          letter-spacing: 0.03em;
+          font-weight: 500;
+        }
+        .new-design .text-button:hover:not(:disabled) {
+          border-color: rgba(237, 166, 163, 0.3);
+          box-shadow: 0 0 10px rgba(237, 166, 163, 0.08);
+        }
+        .new-design.light-mode .text-button:hover:not(:disabled) {
+          border-color: rgba(226, 125, 96, 0.3);
+          box-shadow: 0 0 10px rgba(226, 125, 96, 0.06);
+        }
 
         @media (max-width: 768px) { .text-buttons-row { width: 90%; display: flex; padding-top: var(--spacing-xs); gap: var(--spacing-xs); white-space: pre-wrap; } .text-button { font-size: 0.6rem; } .text-button svg { width: 18px; height: 18px; flex-shrink: 0; } .text-button .material-symbols-outlined { font-size: 18px; } }
         @media (max-width: 640px) { .text-buttons-row { display: flex; width: 90%; padding-top: var(--spacing-xs); gap: var(--spacing-xs); white-space: pre-wrap; } .text-button { max-height: 25px; } .text-button p { display: none; } }

@@ -13,7 +13,11 @@
     </button>
 
     <div id="logo-container">
-      <img src="./public/favicon.svg" alt="Coworker" width="22" height="22">
+      <!-- Inline SVG für CSS-Variable Support -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="32" height="32">
+        <rect width="100" height="100" rx="20" class="logo-bg"/>
+        <text x="50" y="72" font-family="Arial, Helvetica, sans-serif" font-size="70" font-weight="bold" fill="white" text-anchor="middle">C</text>
+      </svg>
     </div>
   </div>
 
@@ -23,11 +27,11 @@
     .toggle-sidebar-button {
       height: 2.6rem;
       width: 2.6rem;
-      background-color: var(--color-background);
-      border: 0.1rem solid var(--color-border);
-      border-radius: var(--spacing-xs);
+      background-color: var(--color-panel);
+      border: 1px solid var(--color-border);
+      border-radius: var(--lux-radius-sm);
       color: var(--color-text);
-      opacity: 0.8;
+      opacity: 0.9;
       cursor: pointer;
       left: var(--spacing-md);
       padding: 0.47rem 0.56rem;
@@ -37,8 +41,16 @@
       -webkit-transition: all var(--transition-speed) ease-in-out;
       transition: all var(--transition-speed) ease-in-out;
     }
-    .toggle-sidebar-button:hover { background-color: var(--color-background-hover); opacity: 1; }
-    .toggle-sidebar-button:active { opacity: 0.5; }
+    .toggle-sidebar-button:hover { 
+      background-color: var(--color-background-hover); 
+      opacity: 1; 
+      border-color: var(--color-accent);
+      box-shadow: 0 0 12px rgba(237, 166, 163, 0.2);
+    }
+    .new-design.light-mode .toggle-sidebar-button:hover {
+      box-shadow: 0 0 12px rgba(226, 125, 96, 0.2);
+    }
+    .toggle-sidebar-button:active { opacity: 0.6; transform: scale(0.95); }
     .toggle-sidebar-button .material-symbols-outlined { 
       font-size: 22px;
       -webkit-transition: all var(--transition-speed) ease; 
@@ -61,7 +73,43 @@
     #logo-container a { color: inherit; text-decoration: none; }
     #logo-container img { border-radius: var(--spacing-xs); width: auto; height: 2.6rem; -webkit-transition: filter 0.3s ease; transition: filter 0.3s ease; }
 
+    /* Legacy light mode filter (nur für altes favicon.svg) */
     .light-mode #logo-container img { -webkit-filter: invert(100%) grayscale(100%); filter: invert(100%) grayscale(100%); }
+    
+    /* Logo SVG Styling */
+    #logo-container svg {
+      width: 2.6rem;
+      height: 2.6rem;
+      border-radius: var(--lux-radius-sm);
+      transition: all 0.3s ease;
+    }
+    
+    #logo-container .logo-bg {
+      fill: #f57c00; /* Fallback für altes Design */
+      transition: all 0.3s ease;
+    }
+    
+    /* NEW DESIGN: Logo mit CSS-Variablen - perfekte Akzentfarbe */
+    .new-design #logo-container svg {
+      filter: drop-shadow(0 0 8px rgba(237, 166, 163, 0.4));
+    }
+    
+    .new-design #logo-container .logo-bg {
+      fill: var(--color-accent); /* Dusty Rose in Dark, Terracotta in Light */
+    }
+    
+    .new-design.light-mode #logo-container svg {
+      filter: drop-shadow(0 0 8px rgba(226, 125, 96, 0.3));
+    }
+    
+    .new-design #logo-container:hover svg {
+      filter: drop-shadow(0 0 12px rgba(237, 166, 163, 0.6));
+      transform: scale(1.05);
+    }
+    
+    .new-design.light-mode #logo-container:hover svg {
+      filter: drop-shadow(0 0 12px rgba(226, 125, 96, 0.5));
+    }
 
     /* Collapsed sidebar: hide logo, center toggle */
     #left-panel.collapsed #logo-container { display: none; }

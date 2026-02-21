@@ -1,4 +1,12 @@
 /* Button Styles */
+
+/* NEW DESIGN: Ensure lux variables are available */
+:root {
+  --lux-radius-sm: 8px;
+  --lux-radius-md: 12px;
+  --lux-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .button {
   background: var(--color-panel);
   font-weight: 500;
@@ -196,8 +204,8 @@
   justify-content: center;
   background: transparent;
   border: 1px solid var(--color-border);
-  border-radius: 0.25rem;
-  color: var(--color-primary);
+  border-radius: var(--lux-radius-sm);
+  color: var(--color-text);
   cursor: pointer;
   padding: 0.25rem;
   width: 1.75rem;
@@ -209,19 +217,46 @@
 .btn-icon-action .material-symbols-outlined,
 .btn-icon-action .material-icons-outlined {
   font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
 .btn-icon-action:hover {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   background-color: var(--color-background-hover);
+}
+
+.btn-icon-action:hover .material-symbols-outlined,
+.btn-icon-action:hover .material-icons-outlined {
+  color: var(--color-accent);
+  transform: scale(1.1);
 }
 
 .btn-icon-action:active {
   background-color: var(--color-background-hover);
-  color: var(--color-primary);
+  color: var(--color-accent);
+  transform: scale(0.95);
 }
 
 .btn-icon-action.danger:hover {
   border-color: #e57373;
   color: #e57373;
+}
+
+/* NEW DESIGN: Enhanced icon action buttons */
+.new-design .btn-icon-action {
+  background: linear-gradient(135deg, transparent 0%, rgba(252, 251, 251, 0.03) 100%);
+  border-color: rgba(237, 166, 163, 0.15);
+}
+
+.new-design.light-mode .btn-icon-action {
+  background: linear-gradient(135deg, transparent 0%, rgba(45, 79, 30, 0.03) 100%);
+  border-color: rgba(226, 125, 96, 0.15);
+}
+
+.new-design .btn-icon-action:hover {
+  box-shadow: 0 0 10px rgba(237, 166, 163, 0.15);
+}
+
+.new-design.light-mode .btn-icon-action:hover {
+  box-shadow: 0 0 10px rgba(226, 125, 96, 0.15);
 }

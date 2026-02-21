@@ -86,9 +86,11 @@
       justify-content: space-between;
       width: 100%;
       min-height: 40px;
-      border-radius: 4px;
+      border-radius: var(--lux-radius-sm);
       overflow: hidden;
       cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
     }
 
     .chat-list-button {
@@ -114,6 +116,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       font-size: var(--font-size-small);
+      transition: all 0.2s ease;
     }
 
     .chat-list-action-btn {
@@ -123,6 +126,33 @@
 
     .chat-container:hover{
       background-color: var(--color-background-hover);
+    }
+    
+    /* NEW DESIGN: Enhanced chat items */
+    .new-design .chat-container {
+      margin-bottom: 2px;
+    }
+    
+    .new-design .chat-container:hover {
+      border-color: var(--color-border);
+    }
+    
+    .new-design .chat-selected {
+      background: linear-gradient(90deg, var(--color-background-hover) 0%, transparent 100%);
+      border-left: 2px solid var(--color-accent);
+    }
+    
+    .new-design .chat-selected .chat-name {
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+    
+    .new-design .project-color-ball {
+      box-shadow: 0 0 0 2px rgba(237, 166, 163, 0.15);
+    }
+    
+    .new-design.light-mode .project-color-ball {
+      box-shadow: 0 0 0 2px rgba(226, 125, 96, 0.15);
     }
 
     .device-pointer .chat-container .chat-list-action-btn {

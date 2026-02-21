@@ -55,6 +55,18 @@
   opacity: 0.85;
 }
 
+/* NEW DESIGN: Enhanced process group header */
+.new-design .process-group-header {
+  padding: var(--spacing-xs) 0;
+}
+.new-design .process-group-header:hover {
+  opacity: 1;
+}
+.new-design .process-group-header .group-title {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 /* Expand/collapse triangle - CSS-only (no Material Icons) */
 .process-group-header .expand-icon {
   display: inline-block;
@@ -125,6 +137,22 @@
   flex-shrink: 0;
   line-height: 1;
   background: color-mix(in srgb, var(--step-accent, #94a3b8) 12%, transparent);
+}
+
+/* NEW DESIGN: Enhanced step badges */
+.new-design .step-badge {
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid color-mix(in srgb, var(--step-accent) 30%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--step-accent) 15%, transparent);
+}
+.new-design .step-badge.GEN,
+.new-design .step-badge.END {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--step-accent) 25%, transparent);
 }
 
 /* Status badge icon */
@@ -263,6 +291,12 @@
   color: var(--step-accent);
 }
 
+/* NEW DESIGN: Enhanced step badge hover */
+.new-design .process-step-header:hover .step-badge {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
 
 /* Completed process group styling */
 .process-group-completed {
@@ -354,6 +388,14 @@
   overflow: hidden;
   color: var(--color-text-muted);
   max-width: 100%;
+}
+
+/* NEW DESIGN: Enhanced process group content */
+.new-design .process-group.expanded .process-group-content {
+  border-top-color: rgba(237, 166, 163, 0.15);
+}
+.new-design.light-mode .process-group.expanded .process-group-content {
+  border-top-color: rgba(226, 125, 96, 0.15);
 }
 
 .process-group-content > .process-steps {
@@ -524,6 +566,20 @@
   /* overscroll-behavior: contain; */
 }
 
+/* NEW DESIGN: Enhanced step detail scroll */
+.new-design .process-step-detail-scroll {
+  background: rgba(237, 166, 163, 0.02);
+  border: 1px solid rgba(237, 166, 163, 0.08);
+  border-radius: var(--lux-radius-sm);
+}
+.new-design.light-mode .process-step-detail-scroll {
+  background: rgba(226, 125, 96, 0.02);
+  border: 1px solid rgba(226, 125, 96, 0.08);
+}
+.new-design .process-step.expanded > .process-step-detail > .process-step-detail-scroll {
+  padding: var(--spacing-sm);
+}
+
 .process-step.expanded > .process-step-detail > .process-step-detail-scroll > .process-step-detail-scroll {
   scrollbar-width: thin;
   -ms-overflow-style: thin;
@@ -572,6 +628,12 @@
   align-items: center;
   justify-content: end;
   white-space: nowrap;
+}
+
+/* NEW DESIGN: Enhanced step KVP keys */
+.new-design .process-step-detail-scroll .step-kvp-key {
+  font-weight: 600;
+  opacity: 1;
 }
 
 .process-step-detail-scroll .step-kvp-key .material-symbols-outlined {

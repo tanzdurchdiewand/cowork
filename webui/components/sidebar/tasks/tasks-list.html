@@ -148,15 +148,30 @@
 
     /* Selected task accent */
     .task-selected {
-      background-color: var(--color-background-hover);
+      background: linear-gradient(90deg, var(--color-background-hover) 0%, transparent 100%);
+      border-left: 2px solid var(--color-accent);
+      border-radius: 0 var(--lux-radius-sm) var(--lux-radius-sm) 0;
     }
 
     .task-selected .task-name {
-      font-weight: bold;
+      font-weight: 600;
+      color: var(--color-accent);
+    }
+    
+    /* NEW DESIGN: Task container enhancements */
+    .new-design .task-container {
+      border-radius: var(--lux-radius-sm);
+      border: 1px solid transparent;
+      margin-bottom: 2px;
+      transition: all 0.2s ease;
+    }
+    
+    .new-design .task-container:hover {
+      border-color: var(--color-border);
     }
   
     /* Scheduler badges (subset used in sidebar) */
-    .scheduler-status-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; text-transform: capitalize; white-space: nowrap; }
+    .scheduler-status-badge { display: inline-block; padding: 4px 8px; border-radius: var(--lux-radius-sm); font-size: 12px; font-weight: 500; text-transform: capitalize; white-space: nowrap; }
     .scheduler-status-badge-small { font-size: 10px; padding: 2px 6px; margin-right: 5px; min-width: 40px; text-align: center; }
     .scheduler-status-idle { background-color: rgba(0, 100, 0, 0.2); color: #2a9d8f; border: 1px solid rgba(42, 157, 143, 0.3); }
     .scheduler-status-running { background-color: rgba(0, 60, 120, 0.2); color: #4361ee; border: 1px solid rgba(67, 97, 238, 0.3); }
@@ -166,6 +181,37 @@
     .light-mode .scheduler-status-running { background-color: rgba(67, 97, 238, 0.1); color: #2540b3; }
     .light-mode .scheduler-status-disabled { background-color: rgba(108, 117, 125, 0.1); color: #495057; }
     .light-mode .scheduler-status-error { background-color: rgba(230, 57, 70, 0.1); color: #c5283d; }
+    
+    /* NEW DESIGN: Enhanced scheduler badges with accent colors */
+    .new-design .scheduler-status-badge {
+      border-radius: 20px;
+      font-size: 9px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    
+    .new-design .scheduler-status-running {
+      background-color: rgba(237, 166, 163, 0.15);
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+      box-shadow: 0 0 8px rgba(237, 166, 163, 0.2);
+    }
+    
+    .new-design.light-mode .scheduler-status-running {
+      background-color: rgba(226, 125, 96, 0.15);
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+      box-shadow: 0 0 8px rgba(226, 125, 96, 0.2);
+    }
+    
+    .new-design .btn-icon-action:hover .material-symbols-outlined {
+      color: var(--color-accent);
+      transform: scale(1.1);
+    }
+    
+    .new-design .btn-icon-action .material-symbols-outlined {
+      transition: all 0.2s ease;
+    }
   
     .empty-list-message { display: flex; justify-content: center; align-items: center; height: 100px; color: var(--color-secondary); text-align: center; opacity: 0.7; font-style: italic; }
     .light-mode .empty-list-message { color: var(--color-secondary-light); }

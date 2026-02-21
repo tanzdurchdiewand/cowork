@@ -63,9 +63,16 @@
   <style>
     .queue-preview {
       border: 1px solid var(--color-border);
-      border-radius: 8px;
+      border-radius: var(--lux-radius-md);
       padding: var(--spacing-sm);
       margin-bottom: var(--spacing-xs);
+      background: linear-gradient(135deg, var(--color-panel) 0%, rgba(25, 42, 86, 0.5) 100%);
+    }
+    
+    /* NEW DESIGN: Enhanced queue preview */
+    .new-design .queue-preview {
+      background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-background) 100%);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     .queue-header {
@@ -77,45 +84,55 @@
 
     .queue-title {
       font-size: var(--font-size-xs);
-      color: var(--color-text-secondary);
+      color: var(--color-text-muted);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
 
     .queue-header-actions {
       display: flex;
-      gap: 2px;
+      gap: 4px;
     }
 
     .queue-header-btn {
       background: transparent;
-      border: none;
-      color: var(--color-text-secondary);
+      border: 1px solid transparent;
+      color: var(--color-text);
       cursor: pointer;
-      padding: 2px;
-      border-radius: 4px;
+      padding: 4px;
+      border-radius: var(--lux-radius-sm);
       display: flex;
       align-items: center;
       opacity: 0.6;
-      transition: all 0.1s ease-in-out;
+      transition: all 0.2s ease;
     }
 
     .queue-header-btn:hover {
       opacity: 1;
+      background: var(--color-background-hover);
+      border-color: var(--color-border);
       transform: scale(1.1);
+    }
+    
+    .queue-header-btn:hover .material-symbols-outlined {
+      color: var(--color-accent);
     }
 
     .queue-header-btn:active {
-      opacity: 0.5;
+      opacity: 0.6;
       transform: scale(0.95);
     }
 
     .queue-header-btn .material-symbols-outlined {
       font-size: var(--font-size-large);
+      transition: all 0.2s ease;
     }
 
     .queue-items {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
       max-height: 120px;
       overflow-y: auto;
     }
@@ -126,12 +143,15 @@
       justify-content: space-between;
       gap: var(--spacing-sm);
       padding: 6px 8px;
-      border-radius: 4px;
+      border-radius: var(--lux-radius-sm);
       cursor: default;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
     }
 
     .queue-item:hover {
       background-color: var(--color-background-hover);
+      border-color: var(--color-border);
     }
 
     .queue-item-content {
@@ -146,12 +166,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 1rem;
-      height: 1rem;
-      font-size: 0.5rem;
-      color: var(--color-text-secondary);
+      width: 1.2rem;
+      height: 1.2rem;
+      font-size: 0.6rem;
+      color: var(--color-accent);
       background: var(--color-background);
       border-radius: 50%;
+      font-weight: 600;
     }
 
     .queue-item-text {
@@ -206,16 +227,27 @@
     .queue-action-btn {
       background: transparent;
       border: none;
-      color: var(--color-primary);
+      color: var(--color-text);
       cursor: pointer;
       padding: 4px;
-      border-radius: 4px;
+      border-radius: var(--lux-radius-sm);
       display: flex;
       align-items: center;
+      transition: all 0.2s ease;
+    }
+    
+    .queue-action-btn:hover {
+      background: var(--color-background-hover);
+    }
+    
+    .queue-action-btn:hover .material-symbols-outlined {
+      color: var(--color-accent);
+      transform: scale(1.1);
     }
 
     .queue-action-btn .material-symbols-outlined {
       font-size: var(--font-size-smaller);
+      transition: all 0.2s ease;
     }
 
     .queue-item-pending {
@@ -231,7 +263,7 @@
       width: 1rem;
       height: 1rem;
       border: 2px solid var(--color-border);
-      border-top-color: var(--color-primary);
+      border-top-color: var(--color-accent);
       border-radius: 50%;
       animation: pending-spin 0.8s linear infinite;
     }

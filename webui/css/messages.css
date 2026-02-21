@@ -28,6 +28,14 @@
   padding-left: 20%;
 }
 
+/* NEW DESIGN: Enhanced message containers */
+.new-design .user-container {
+  padding-left: 15%;
+}
+.new-design.light-mode .user-container {
+  padding-left: 15%;
+}
+
 .ai-container {
   align-self: flex-start;
 }
@@ -58,6 +66,19 @@
   border-radius: var(--border-radius);
   max-width: 80%;
   width: auto;
+}
+
+/* NEW DESIGN: User messages with accent border */
+.new-design .message-user .message-text {
+  background: linear-gradient(135deg, var(--color-input) 0%, var(--color-panel) 100%);
+  border-color: rgba(237, 166, 163, 0.3);
+  border-radius: var(--lux-radius-md);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.new-design.light-mode .message-user .message-text {
+  border-color: rgba(226, 125, 96, 0.25);
+  box-shadow: 0 2px 8px rgba(45, 79, 30, 0.05);
 }
 
 .message-user > div {
@@ -350,6 +371,20 @@
   width: 40%;
 }
 
+/* NEW DESIGN: Enhanced KVPs */
+.new-design .msg-kvps th {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+.new-design .msg-kvps {
+  background: rgba(237, 166, 163, 0.03);
+  border-radius: var(--lux-radius-sm);
+  padding: var(--spacing-xs);
+}
+.new-design.light-mode .msg-kvps {
+  background: rgba(226, 125, 96, 0.03);
+}
+
 .msg-kvps tr {
   border-bottom: none;
 }
@@ -606,6 +641,22 @@
   background: var(--color-table-row);
 }
 
+/* NEW DESIGN: Enhanced tables in messages */
+.new-design .msg-content th {
+  color: var(--color-accent);
+  background: rgba(237, 166, 163, 0.08);
+  font-weight: 600;
+}
+.new-design .msg-content tr:nth-child(even) {
+  background: rgba(237, 166, 163, 0.03);
+}
+.new-design.light-mode .msg-content th {
+  background: rgba(226, 125, 96, 0.08);
+}
+.new-design.light-mode .msg-content tr:nth-child(even) {
+  background: rgba(226, 125, 96, 0.03);
+}
+
 .msg-content tr:nth-child(even) {
   background: var(--color-table-row);
 }
@@ -719,6 +770,11 @@
   pointer-events: none;
   opacity: 1;
   transition: opacity 0.3s ease-out;
+}
+
+/* NEW DESIGN: Enhanced collapsible fade */
+.new-design .message-collapsible .message-body::after {
+  background: linear-gradient(transparent, color-mix(in srgb, var(--color-chat-background) 90%, transparent));
 }
 
 /* Expanded state */

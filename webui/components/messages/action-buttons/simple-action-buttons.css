@@ -54,7 +54,18 @@
 
 .step-action-buttons .action-button:hover .material-symbols-outlined,
 .action-button:hover .material-symbols-outlined {
-  color: var(--color-text);
+  color: var(--color-accent);
+  transform: scale(1.15);
+}
+
+/* NEW DESIGN: Enhanced action buttons */
+.new-design .step-action-buttons .action-button:hover .material-symbols-outlined,
+.new-design .action-button:hover .material-symbols-outlined {
+  filter: drop-shadow(0 0 4px rgba(237, 166, 163, 0.4));
+}
+.new-design.light-mode .step-action-buttons .action-button:hover .material-symbols-outlined,
+.new-design.light-mode .action-button:hover .material-symbols-outlined {
+  filter: drop-shadow(0 0 4px rgba(226, 125, 96, 0.3));
 }
 
 /* Success state */
@@ -69,6 +80,20 @@
 .action-button.error .material-symbols-outlined {
   color: var(--color-accent);
   font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+
+/* NEW DESIGN: Success/Error states with glow */
+.new-design .step-action-buttons .action-button.success .material-symbols-outlined,
+.new-design .action-button.success .material-symbols-outlined {
+  filter: drop-shadow(0 0 4px rgba(76, 175, 80, 0.4));
+}
+.new-design .step-action-buttons .action-button.error .material-symbols-outlined,
+.new-design .action-button.error .material-symbols-outlined {
+  filter: drop-shadow(0 0 4px rgba(237, 166, 163, 0.4));
+}
+.new-design.light-mode .step-action-buttons .action-button.error .material-symbols-outlined,
+.new-design.light-mode .action-button.error .material-symbols-outlined {
+  filter: drop-shadow(0 0 4px rgba(226, 125, 96, 0.3));
 }
 
 .show-more-btn,

@@ -89,6 +89,38 @@
   --border-radius-sm: 0.5rem;
   --transition-speed: 0.3s;
   --svg-filter: brightness(0) saturate(100%) invert(46%) sepia(98%) saturate(1000%) hue-rotate(10deg) brightness(100%) contrast(96%);
+
+  /* ============================================
+     NEW DESIGN SYSTEM - 3 Colors per Mode
+     ============================================
+     
+     DARK MODE (Luxury) - 60-30-10:
+     60% Midnight Navy #192A56 - Background, Surface
+     30% Pearl White   #FCFBFB - Text, Content  
+     10% Dusty Rose    #EDA6A3 - Accent, CTA, Buttons, Icons
+     
+     LIGHT MODE (Earthy) - 60-30-10:
+     60% Warm Beige    #F5E6CC - Background
+     30% Forest Green  #2D4F1E - Text, Content
+     10% Terracotta    #E27D60 - Accent, CTA, Buttons, Icons
+     ============================================ */
+  
+  /* Dark Mode Colors */
+  --lux-navy: #192A56;
+  --lux-rose: #EDA6A3;
+  --lux-pearl: #FCFBFB;
+  
+  /* Light Mode Colors */
+  --earth-green: #2D4F1E;
+  --earth-beige: #F5E6CC;
+  --earth-terracotta: #E27D60;
+  
+  /* Layout */
+  --lux-radius-sm: 8px;
+  --lux-radius-md: 12px;
+  --lux-radius-lg: 16px;
+  --lux-radius-xl: 20px;
+  --lux-transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Dark mode class */
@@ -111,6 +143,96 @@
   --color-error-text: var(--color-error-text-dark);
   --color-warning-text: var(--color-warning-text-dark);
   --color-table-row: var(--color-table-row-dark);
+}
+
+/* ============================================
+   NEW DESIGN SYSTEM - Dark Mode (Luxury)
+   ============================================
+   3 Colors: 60% Navy | 30% Pearl | 10% Rose
+   ============================================ */
+.new-design {
+  /* 60% - Backgrounds */
+  --color-background: #0F1A36;       /* Dark Navy */
+  --color-chat-background: #0F1A36;  /* Dark Navy */
+  --color-panel: #192A56;            /* Navy (Surface) */
+  --color-message-bg: #192A56;       /* Navy */
+  --color-input: #1E3160;            /* Light Navy (Elevated) */
+  --color-table-row: #1E3160;        /* Light Navy */
+  
+  /* 30% - Text */
+  --color-text: #FCFBFB;             /* Pearl White */
+  --color-message-text: #FCFBFB;     /* Pearl White */
+  --color-text-muted: rgba(252, 251, 251, 0.5);
+  
+  /* 10% - Accents (CTA, Buttons, Icons, Logo) */
+  --color-primary: #EDA6A3;          /* Dusty Rose */
+  --color-accent: #EDA6A3;           /* Dusty Rose */
+  --color-highlight: #EDA6A3;        /* Dusty Rose */
+  
+  --color-secondary: #192A56;
+  --color-border: rgba(237, 166, 163, 0.2);
+  --color-input-focus: rgba(237, 166, 163, 0.1);
+  --color-background-hover: rgba(237, 166, 163, 0.08);
+  --color-error-text: #ef5350;
+  --color-warning-text: #ffa726;
+  --transition-speed: var(--lux-transition-base);
+}
+
+/* ============================================
+   NEW DESIGN SYSTEM - Light Mode (Earthy)
+   ============================================
+   3 Colors: 60% Beige | 30% Green | 10% Terracotta
+   ============================================ */
+.new-design.light-mode {
+  /* 60% - Backgrounds */
+  --color-background: #F5E6CC;       /* Warm Beige */
+  --color-chat-background: #F5E6CC;  /* Warm Beige */
+  --color-panel: #E8D9B8;            /* Darker Beige (Surface) */
+  --color-message-bg: #FDF6E9;       /* Light Beige */
+  --color-input: #FDF6E9;            /* Light Beige */
+  --color-table-row: rgba(45, 79, 30, 0.05);
+  
+  /* 30% - Text */
+  --color-text: #2D4F1E;             /* Forest Green */
+  --color-message-text: #2D4F1E;     /* Forest Green */
+  --color-text-muted: rgba(45, 79, 30, 0.5);
+  
+  /* 10% - Accents (CTA, Buttons, Icons, Logo) */
+  --color-primary: #E27D60;          /* Terracotta */
+  --color-accent: #E27D60;           /* Terracotta */
+  --color-highlight: #E27D60;        /* Terracotta */
+  
+  --color-secondary: #E8D9B8;
+  --color-border: rgba(226, 125, 96, 0.25);
+  --color-input-focus: rgba(226, 125, 96, 0.1);
+  --color-background-hover: rgba(226, 125, 96, 0.08);
+  --color-error-text: #c62828;
+  --color-warning-text: #e65100;
+}
+
+/* ============================================
+   COWORK LOGO - Part of Accent Color (10%)
+   ============================================
+   Logo uses the same accent color as all other icons:
+   - Dark Mode: Dusty Rose (#EDA6A3)
+   - Light Mode: Terracotta (#E27D60)
+   ============================================ */
+
+/* Remove default invert filter */
+.new-design #logo-container img,
+.new-design.light-mode #logo-container img {
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* Dark Mode: Logo uses var(--color-accent) = Rose */
+.new-design #logo-container img {
+  /* SVG will inherit color from parent or use accent color via CSS */
+}
+
+/* Light Mode: Logo uses var(--color-accent) = Terracotta */
+.new-design.light-mode #logo-container img {
+  /* SVG will inherit color from parent or use accent color via CSS */
 } 
 
 
@@ -495,9 +617,30 @@ h4 {
 }
 
 .preview-item:hover {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
+}
+
+/* NEW DESIGN: Enhanced preview items */
+.new-design .preview-item {
+  border-radius: var(--lux-radius-md);
+  background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-background) 100%);
+}
+
+.new-design .preview-item:hover {
+  box-shadow: 0 4px 20px rgba(237, 166, 163, 0.15);
+}
+
+.new-design.light-mode .preview-item:hover {
+  box-shadow: 0 4px 20px rgba(226, 125, 96, 0.1);
+}
+
+.new-design .preview-item.file-preview .extension {
+  background: var(--color-accent);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  border-radius: 10px;
 }
 
 .preview-item.image-preview img {
@@ -585,8 +728,13 @@ h4 {
 }
 
 .remove-attachment:hover {
-  background-color: var(--color-accent-dark);
+  background-color: var(--color-accent);
   transform: scale(1.1) !important;
+  box-shadow: 0 0 10px rgba(237, 166, 163, 0.4);
+}
+
+.new-design.light-mode .remove-attachment:hover {
+  box-shadow: 0 0 10px rgba(226, 125, 96, 0.3);
 }
 
 .device-touch .remove-attachment:active {
@@ -930,8 +1078,8 @@ h4 {
 }
 
 .slider {
-  background-color: #272727;
-  border: 1px solid #535353;
+  background-color: rgba(252, 251, 251, 0.15);
+  border: 1px solid var(--color-border);
   border-radius: 1.15rem;
   bottom: 0;
   cursor: pointer;
@@ -944,7 +1092,7 @@ h4 {
 }
 
 .slider:before {
-  background-color: #b6b6b6;
+  background-color: var(--color-text);
   border-radius: 50%;
   bottom: 0.134rem;
   content: "";
@@ -957,7 +1105,16 @@ h4 {
 }
 
 input:checked + .slider {
-  background-color: #3a3a3a;
+  background-color: var(--color-accent);
+}
+
+/* NEW DESIGN: Toggle switch accent glow */
+.new-design input:checked + .slider {
+  box-shadow: 0 0 12px rgba(237, 166, 163, 0.5);
+}
+
+.new-design.light-mode input:checked + .slider {
+  box-shadow: 0 0 12px rgba(226, 125, 96, 0.4);
 }
 
 input:checked + .slider:before {
@@ -1139,16 +1296,16 @@ a:active {
 }
 
 .light-mode .slider {
-  background-color: #f1f1f1;
-  border: 1px solid #dddddd;
+  background-color: rgba(45, 79, 30, 0.1);
+  border: 1px solid var(--color-border);
 }
 
 .light-mode .slider:before {
-  background-color: #838383;
+  background-color: var(--color-text);
 }
 
 .light-mode input:checked + .slider {
-  background-color: #e6e6e6;
+  background-color: var(--color-accent);
 }
 
 .light-mode .extension {
@@ -1163,17 +1320,31 @@ a:active {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(15, 26, 54, 0.92);
   z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+  backdrop-filter: blur(8px);
 }
 
 .light-mode .dragdrop-overlay {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(245, 230, 204, 0.95);
+}
+
+/* NEW DESIGN: Enhanced dragdrop overlay */
+.new-design .dragdrop-overlay {
+  background: rgba(15, 26, 54, 0.95);
+  border: 2px dashed var(--color-accent);
+  box-shadow: inset 0 0 100px rgba(237, 166, 163, 0.1);
+}
+
+.new-design.light-mode .dragdrop-overlay {
+  background: rgba(245, 230, 204, 0.97);
+  border: 2px dashed var(--color-accent);
+  box-shadow: inset 0 0 100px rgba(226, 125, 96, 0.08);
 }
 
 /* Alpine transition classes */
@@ -1219,6 +1390,20 @@ a:active {
   color: var(--color-text);
   font-size: 0.9rem;
   opacity: 0.6;
+}
+
+/* NEW DESIGN: Enhanced dragdrop text */
+.new-design .dragdrop-text {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.new-design .dragdrop-icon {
+  filter: invert(1) drop-shadow(0 0 20px rgba(237, 166, 163, 0.3));
+}
+
+.new-design.light-mode .dragdrop-icon {
+  filter: drop-shadow(0 0 20px rgba(226, 125, 96, 0.2));
 }
 
 .path-link {
