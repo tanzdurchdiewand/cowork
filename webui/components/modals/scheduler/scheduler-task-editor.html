@@ -100,29 +100,52 @@
                         <div class="scheduler-schedule-builder">
                             <div class="scheduler-schedule-field">
                                 <span class="scheduler-schedule-label">Minute</span>
-                                <input type="text" x-model="$store.schedulerStore.editingTask.schedule.minute"
-                                       placeholder="*" maxlength="9">
+                                <input type="text" 
+                                       x-model="$store.schedulerStore.editingTask.schedule.minute"
+                                       @blur="$store.schedulerStore.editingTask.schedule.minute = $store.schedulerStore.validateCronField($store.schedulerStore.editingTask.schedule.minute, 'minute')"
+                                       placeholder="0-59 or *" 
+                                       maxlength="9"
+                                       pattern="[0-9*,/-]*">
                             </div>
                             <div class="scheduler-schedule-field">
                                 <span class="scheduler-schedule-label">Hour</span>
-                                <input type="text" x-model="$store.schedulerStore.editingTask.schedule.hour"
-                                       placeholder="*" maxlength="9">
+                                <input type="text" 
+                                       x-model="$store.schedulerStore.editingTask.schedule.hour"
+                                       @blur="$store.schedulerStore.editingTask.schedule.hour = $store.schedulerStore.validateCronField($store.schedulerStore.editingTask.schedule.hour, 'hour')"
+                                       placeholder="0-23 or *" 
+                                       maxlength="9"
+                                       pattern="[0-9*,/-]*">
                             </div>
                             <div class="scheduler-schedule-field">
                                 <span class="scheduler-schedule-label">Day</span>
-                                <input type="text" x-model="$store.schedulerStore.editingTask.schedule.day"
-                                       placeholder="*" maxlength="9">
+                                <input type="text" 
+                                       x-model="$store.schedulerStore.editingTask.schedule.day"
+                                       @blur="$store.schedulerStore.editingTask.schedule.day = $store.schedulerStore.validateCronField($store.schedulerStore.editingTask.schedule.day, 'day')"
+                                       placeholder="1-31 or *" 
+                                       maxlength="9"
+                                       pattern="[0-9*,/-]*">
                             </div>
                             <div class="scheduler-schedule-field">
                                 <span class="scheduler-schedule-label">Month</span>
-                                <input type="text" x-model="$store.schedulerStore.editingTask.schedule.month"
-                                       placeholder="*" maxlength="9">
+                                <input type="text" 
+                                       x-model="$store.schedulerStore.editingTask.schedule.month"
+                                       @blur="$store.schedulerStore.editingTask.schedule.month = $store.schedulerStore.validateCronField($store.schedulerStore.editingTask.schedule.month, 'month')"
+                                       placeholder="1-12 or *" 
+                                       maxlength="9"
+                                       pattern="[0-9*,/-]*">
                             </div>
                             <div class="scheduler-schedule-field">
                                 <span class="scheduler-schedule-label">Weekday</span>
-                                <input type="text" x-model="$store.schedulerStore.editingTask.schedule.weekday"
-                                       placeholder="*" maxlength="9">
+                                <input type="text" 
+                                       x-model="$store.schedulerStore.editingTask.schedule.weekday"
+                                       @blur="$store.schedulerStore.editingTask.schedule.weekday = $store.schedulerStore.validateCronField($store.schedulerStore.editingTask.schedule.weekday, 'weekday')"
+                                       placeholder="0-6 or *" 
+                                       maxlength="9"
+                                       pattern="[0-9*,/-]*">
                             </div>
+                        </div>
+                        <div class="scheduler-schedule-help">
+                            <small>Format: <code>*</code> (any), <code>5</code> (specific), <code>*/5</code> (every 5), <code>1-5</code> (range)</small>
                         </div>
                     </div>
 
@@ -429,7 +452,12 @@
     .scheduler-form-title {
         font-size: 1.2rem;
         font-weight: 600;
-        color: var(--color-primary);
+        color: var(--color-accent);
+    }
+    
+    /* NEW DESIGN: Enhanced form title */
+    .new-design .scheduler-form-title {
+        letter-spacing: 0.02em;
     }
 
     .scheduler-form-actions {

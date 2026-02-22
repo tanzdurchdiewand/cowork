@@ -162,7 +162,7 @@
       width: 40px;
       height: 40px;
       border: 3px solid var(--color-border);
-      border-top: 3px solid var(--color-primary);
+      border-top: 3px solid var(--color-accent);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin-bottom: var(--spacing-md);
@@ -195,22 +195,31 @@
     /* Header Styles */
     .file-header {
       width: 100%;
-      border-radius: 4px;
+      border-radius: var(--lux-radius-sm);
       overflow: hidden;
       display: grid;
       grid-template-columns: 1.5fr 0.71fr 1.05fr 0.6fr;
-      background: var(--secondary-bg);
+      background: var(--color-panel);
       padding: 8px 0;
       font-weight: bold;
-      border-bottom: 1px solid var(--border-color);
-      color: var(--color-primary);
+      border-bottom: 1px solid var(--color-border);
+      color: var(--color-accent);
     }
     .file-cell,
     .file-cell-size,
     .file-cell-date {
-    color: var(--color-primary);
+    color: var(--color-accent);
     padding: 4px;
     cursor: pointer;
+    }
+    
+    /* NEW DESIGN: Enhanced file header */
+    .new-design .file-header {
+      background: linear-gradient(90deg, var(--color-panel) 0%, rgba(237, 166, 163, 0.05) 100%);
+      border-bottom: 2px solid var(--color-accent);
+    }
+    .new-design.light-mode .file-header {
+      background: linear-gradient(90deg, var(--color-panel) 0%, rgba(226, 125, 96, 0.05) 100%);
     }
 
     /* File Item Styles */
@@ -221,14 +230,23 @@
     padding: 8px 0;
     font-size: 0.875rem;
     border-top: 1px solid var(--color-border);
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
     white-space: nowrap;
-    border-radius: 4px;
+    border-radius: var(--lux-radius-sm);
     overflow: visible; /* allow action dropdown menus to overflow the row */
     color: var(--color-text);
     }
     .file-item:hover {
     background-color: var(--color-secondary);
+    border-left: 2px solid var(--color-accent);
+    }
+    
+    /* NEW DESIGN: Enhanced file items */
+    .new-design .file-item:hover {
+      background: linear-gradient(90deg, var(--color-secondary) 0%, rgba(237, 166, 163, 0.05) 100%);
+    }
+    .new-design.light-mode .file-item:hover {
+      background: linear-gradient(90deg, var(--color-secondary) 0%, rgba(226, 125, 96, 0.03) 100%);
     }
 
     /* File Icon and Name */
@@ -272,11 +290,19 @@
     display: flex;
     align-items: center;
     gap: 24px;
-    background-color: var(--color-message-bg);
+    background: linear-gradient(90deg, var(--color-message-bg) 0%, var(--color-panel) 100%);
     padding: 0.5rem var(--spacing-sm);
     margin: 0 0 var(--spacing-sm) 0;
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--lux-radius-sm);
+    }
+    
+    /* NEW DESIGN: Enhanced path navigator */
+    .new-design .path-navigator {
+      border-color: rgba(237, 166, 163, 0.2);
+    }
+    .new-design.light-mode .path-navigator {
+      border-color: rgba(226, 125, 96, 0.2);
     }
 
     .new-item-buttons {
@@ -331,21 +357,31 @@
     display: inline-flex;
     align-items: center;
     padding: 8px 16px;
-    background: #4248f1;
+    background: var(--color-accent);
     gap: 0.5rem;
-    color: white;
-    border-radius: 4px;
+    color: var(--color-background);
+    border-radius: var(--lux-radius-sm);
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(237, 166, 163, 0.3);
     }
     .btn-upload > svg {
     width: 20px;
     }
     .btn-upload:hover {
-    background-color: #353bc5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(237, 166, 163, 0.4);
     }
     .btn-upload:active {
-    background-color: #2b309c;
+    transform: translateY(0);
+    }
+    
+    /* NEW DESIGN: Enhanced upload button */
+    .new-design.light-mode .btn-upload {
+      box-shadow: 0 4px 12px rgba(226, 125, 96, 0.25);
+    }
+    .new-design.light-mode .btn-upload:hover {
+      box-shadow: 0 6px 16px rgba(226, 125, 96, 0.35);
     }
 
     /* File Actions */

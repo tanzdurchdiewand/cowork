@@ -65,7 +65,7 @@ some classes like modal-header are shared between the old and the new system */
 /* Modal Container (old system) */
 .modal-container {
   background-color: var(--color-panel);
-  border-radius: 12px;
+  border-radius: var(--lux-radius-lg);
   width: 1100px; /* Reduced from 1200px to 1100px */
   max-height: 90vh;
   display: flex;
@@ -73,6 +73,16 @@ some classes like modal-header are shared between the old and the new system */
   overflow: hidden;
   box-shadow: 0 4px 23px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+}
+
+/* NEW DESIGN: Enhanced modal container */
+.new-design .modal-container {
+  background: linear-gradient(180deg, var(--color-panel) 0%, var(--color-background) 100%);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(237, 166, 163, 0.1);
+}
+.new-design.light-mode .modal-container {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(226, 125, 96, 0.1);
 }
 
 /* Modal Header */
@@ -83,8 +93,18 @@ some classes like modal-header are shared between the old and the new system */
   justify-content: space-between;
   padding: 0.5rem 1.5rem 0.5rem 2rem;
   background-color: var(--color-background);
-  color: var(--color-primary);
+  color: var(--color-accent);
   border-bottom: 1px solid var(--color-border);
+}
+
+/* NEW DESIGN: Enhanced modal header */
+.new-design .modal-header {
+  background: linear-gradient(90deg, var(--color-background) 0%, var(--color-panel) 100%);
+}
+.new-design .modal-header h2 {
+  color: var(--color-accent);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 .modal-header h2 {
   margin: 0;
@@ -107,11 +127,21 @@ some classes like modal-header are shared between the old and the new system */
   opacity: 0.7;
   cursor: pointer;
   padding: 0;
-  transition: opacity 0.2s;
+  transition: all 0.2s ease;
 }
 
 .modal-close:hover {
   opacity: 1;
+  color: var(--color-accent);
+  transform: scale(1.1);
+}
+
+/* NEW DESIGN: Enhanced modal close */
+.new-design .modal-close:hover {
+  filter: drop-shadow(0 0 6px rgba(237, 166, 163, 0.4));
+}
+.new-design.light-mode .modal-close:hover {
+  filter: drop-shadow(0 0 6px rgba(226, 125, 96, 0.3));
 }
 
 /* Modal Description */
@@ -202,13 +232,23 @@ some classes like modal-header are shared between the old and the new system */
   padding: 1rem;
   /* padding-bottom: 0; */
   border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
+  border-radius: var(--lux-radius-md);
 }
 .section-title {
   font-size: 1.25rem;
   font-weight: bold;
-  color: var(--color-primary);
+  color: var(--color-accent);
   margin-bottom: 0.5rem;
+}
+
+/* NEW DESIGN: Enhanced sections */
+.new-design .section {
+  background: linear-gradient(135deg, rgba(237, 166, 163, 0.03) 0%, transparent 100%);
+  border-color: rgba(237, 166, 163, 0.15);
+}
+.new-design.light-mode .section {
+  background: linear-gradient(135deg, rgba(226, 125, 96, 0.03) 0%, transparent 100%);
+  border-color: rgba(226, 125, 96, 0.15);
 }
 .section-description {
   color: var(--color-text);
@@ -261,21 +301,32 @@ some classes like modal-header are shared between the old and the new system */
   cursor: not-allowed;
 }
 .btn-ok {
-  background: #4248f1;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-background);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: background 0.3s ease-in-out;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(237, 166, 163, 0.3);
 }
 .btn-ok > svg {
   max-width: 20px;
 }
 .btn-ok:hover {
-  background: #353bc5;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(237, 166, 163, 0.4);
 }
 .btn-ok:active {
-  background: #2b309c;
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(237, 166, 163, 0.3);
+}
+
+/* NEW DESIGN: Light mode btn-ok */
+.new-design.light-mode .btn-ok {
+  box-shadow: 0 4px 12px rgba(226, 125, 96, 0.25);
+}
+.new-design.light-mode .btn-ok:hover {
+  box-shadow: 0 6px 16px rgba(226, 125, 96, 0.35);
 }
 .btn-cancel {
   background: transparent;
@@ -288,25 +339,57 @@ some classes like modal-header are shared between the old and the new system */
   color: var(--color-text);
 }
 .btn-cancel:active {
-  background: #a94658;
-  color: var(--color-text);
+  background: var(--color-accent);
+  color: var(--color-background);
+  opacity: 0.9;
 }
 .light-mode .btn-cancel:hover {
   background: var(--color-accent);
   color: var(--color-background);
 }
 .light-mode .btn-cancel:active {
-  background: #a94658;
+  background: var(--color-accent);
   color: var(--color-background);
+  opacity: 0.9;
+}
+
+/* NEW DESIGN: Enhanced btn-cancel */
+.new-design .btn-cancel {
+  border-radius: var(--lux-radius-sm);
+}
+.new-design .btn-cancel:hover {
+  box-shadow: 0 0 12px rgba(237, 166, 163, 0.2);
+}
+.new-design.light-mode .btn-cancel:hover {
+  box-shadow: 0 0 12px rgba(226, 125, 96, 0.15);
 }
 .btn-field {
-  background: #2196f3;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-background);
   width: fit-content;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(237, 166, 163, 0.25);
+}
+.btn-field:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(237, 166, 163, 0.35);
+}
+.btn-field:active {
+  transform: translateY(0);
 }
 .btn-field:disabled {
-  background: #ccc;
+  background: var(--color-border);
+  color: var(--color-text-muted);
   cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* NEW DESIGN: Light mode btn-field */
+.new-design.light-mode .btn-field {
+  box-shadow: 0 4px 12px rgba(226, 125, 96, 0.2);
+}
+.new-design.light-mode .btn-field:hover {
+  box-shadow: 0 6px 16px rgba(226, 125, 96, 0.3);
 }
 
 /* Editor Toolbar */
@@ -388,20 +471,30 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 16px;
   height: 16px;
-  background: var(--color-primary);
+  background: var(--color-accent);
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 0 8px rgba(237, 166, 163, 0.4);
 }
 
 input[type="range"]::-moz-range-thumb {
   width: 16px;
   height: 16px;
-  background: var(--color-primary);
+  background: var(--color-accent);
   border-radius: 50%;
   cursor: pointer;
   border: none;
   transition: all 0.2s ease;
+  box-shadow: 0 0 8px rgba(237, 166, 163, 0.4);
+}
+
+/* NEW DESIGN: Light mode range slider */
+.new-design.light-mode input[type="range"]::-webkit-slider-thumb {
+  box-shadow: 0 0 8px rgba(226, 125, 96, 0.3);
+}
+.new-design.light-mode input[type="range"]::-moz-range-thumb {
+  box-shadow: 0 0 8px rgba(226, 125, 96, 0.3);
 }
 
 .range-value {
@@ -549,12 +642,23 @@ input[type="range"]::-moz-range-thumb {
 .confirm-dialog {
   background: var(--color-panel);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--lux-radius-lg);
   max-width: 450px;
   width: 90%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transform: scale(0.95);
   transition: transform 0.2s ease;
+}
+
+/* NEW DESIGN: Enhanced confirm dialog */
+.new-design .confirm-dialog {
+  background: linear-gradient(180deg, var(--color-panel) 0%, var(--color-background) 100%);
+  border-color: rgba(237, 166, 163, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(237, 166, 163, 0.1);
+}
+.new-design.light-mode .confirm-dialog {
+  border-color: rgba(226, 125, 96, 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(226, 125, 96, 0.1);
 }
 
 .confirm-dialog-backdrop.visible .confirm-dialog {

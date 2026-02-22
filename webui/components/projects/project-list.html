@@ -85,13 +85,30 @@
 <style>
     .projects-project-card {
         border: 1px solid var(--color-border);
-        border-radius: 0.5em;
+        border-radius: var(--lux-radius-md);
         padding: 1em;
         margin-top: 1em;
+        background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-background) 100%);
+        transition: all 0.2s ease;
+    }
+
+    .projects-project-card:hover {
+        border-color: rgba(237, 166, 163, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
     .projects-project-card.projects-active {
-        border-color: var(--color-highlight);
+        border-color: var(--color-accent);
+        border-width: 2px;
+        box-shadow: 0 0 20px rgba(237, 166, 163, 0.15);
+    }
+    
+    /* NEW DESIGN: Enhanced project cards */
+    .new-design.light-mode .projects-project-card:hover {
+        border-color: rgba(226, 125, 96, 0.25);
+    }
+    .new-design.light-mode .projects-project-card.projects-active {
+        box-shadow: 0 0 20px rgba(226, 125, 96, 0.1);
     }
 
     .projects-project-card-title {
@@ -112,6 +129,15 @@
         margin-right: 0.5em;
         flex-shrink: 0;
         box-sizing: border-box;
+        box-shadow: 0 0 0 2px rgba(237, 166, 163, 0.2);
+    }
+    
+    /* NEW DESIGN: Enhanced color ball */
+    .new-design .project-color-ball {
+        box-shadow: 0 0 0 2px rgba(237, 166, 163, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .new-design.light-mode .project-color-ball {
+        box-shadow: 0 0 0 2px rgba(226, 125, 96, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .projects-project-card-description {
@@ -121,11 +147,11 @@
 
     .projects-no-projects {
         border: 1px dashed var(--color-border);
-        border-radius: 0.5em;
+        border-radius: var(--lux-radius-md);
         padding: 2em;
         margin: 1em;
         text-align: center;
-        background: var(--color-panel);
+        background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-background) 100%);
     }
 
     .projects-no-projects-actions {

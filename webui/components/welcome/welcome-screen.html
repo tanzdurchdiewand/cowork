@@ -122,6 +122,15 @@
             filter: invert(0.85);
             opacity: 0.08;
         }
+        
+        /* NEW DESIGN: Enhanced welcome container */
+        .new-design .welcome-container {
+            background: linear-gradient(180deg, var(--color-background) 0%, color-mix(in srgb, var(--color-panel) 30%, var(--color-background)) 100%);
+        }
+        
+        .new-design .welcome-container::before {
+            opacity: 0.05;
+        }
 
         .welcome-content {
             position: relative;
@@ -148,27 +157,34 @@
             justify-content: center;
             gap: 10px;
             padding: 24px 12px;
-            background: var(--color-panel);
+            background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-background) 100%);
             border: 1px solid var(--color-border);
-            border-radius: 12px;
+            border-radius: var(--lux-radius-md);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         .welcome-action-card:hover {
-            background: var(--color-secondary);
-            border-color: var(--color-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 15%, transparent);
+            background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-input) 100%);
+            border-color: var(--color-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(237, 166, 163, 0.15);
         }
 
         .welcome-action-card:active {
-            transform: translateY(0);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(237, 166, 163, 0.1);
         }
 
         .welcome-action-icon {
             font-size: 1.75rem;
-            color: var(--color-primary);
+            color: var(--color-accent);
+            transition: all 0.25s ease;
+        }
+        
+        .welcome-action-card:hover .welcome-action-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px rgba(237, 166, 163, 0.4));
         }
 
         .welcome-action-title {
@@ -176,6 +192,14 @@
             font-weight: 500;
             margin: 0;
             color: var(--color-text);
+        }
+        
+        /* NEW DESIGN: Light mode adjustments */
+        .new-design.light-mode .welcome-action-card:hover {
+            box-shadow: 0 8px 24px rgba(226, 125, 96, 0.12);
+        }
+        .new-design.light-mode .welcome-action-card:hover .welcome-action-icon {
+            filter: drop-shadow(0 0 8px rgba(226, 125, 96, 0.3));
         }
 
         /* Actions footer */
@@ -191,7 +215,7 @@
             justify-content: center;
             background: transparent;
             border: 1px solid var(--color-border);
-            border-radius: 6px;
+            border-radius: var(--lux-radius-sm);
             color: var(--color-text-muted);
             cursor: pointer;
             padding: 6px 10px;
@@ -200,8 +224,13 @@
 
         .welcome-refresh-button:hover {
             background: var(--color-panel);
-            color: var(--color-text);
-            border-color: var(--color-primary);
+            color: var(--color-accent);
+            border-color: var(--color-accent);
+            box-shadow: 0 0 12px rgba(237, 166, 163, 0.15);
+        }
+        
+        .new-design.light-mode .welcome-refresh-button:hover {
+            box-shadow: 0 0 12px rgba(226, 125, 96, 0.1);
         }
 
         .welcome-refresh-button:disabled {
@@ -237,24 +266,41 @@
             align-items: flex-start;
             gap: 12px;
             padding: 14px 16px;
-            background: var(--color-panel);
+            background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-background) 100%);
             border: 1px solid var(--color-border);
-            border-radius: 8px;
+            border-radius: var(--lux-radius-sm);
             text-align: left;
             position: relative;
             transition: all 0.2s ease;
         }
+        
+        .welcome-banner:hover {
+            border-color: rgba(237, 166, 163, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .new-design.light-mode .welcome-banner:hover {
+            border-color: rgba(226, 125, 96, 0.3);
+        }
 
         .welcome-banner.banner-info {
-            border-left: 4px solid #2196F3;
+            border-left: 3px solid #2196F3;
         }
 
         .welcome-banner.banner-warning {
-            border-left: 4px solid #FF9800;
+            border-left: 3px solid #FF9800;
         }
 
         .welcome-banner.banner-error {
-            border-left: 4px solid #F44336;
+            border-left: 3px solid #F44336;
+        }
+        
+        /* NEW DESIGN: Enhanced banners */
+        .new-design .welcome-banner.banner-info {
+            border-left-color: var(--color-accent);
+        }
+        .new-design .welcome-banner.banner-info .welcome-banner-icon {
+            color: var(--color-accent);
         }
 
         .welcome-banner-icon {
@@ -295,8 +341,13 @@
         }
 
         .welcome-banner-html a {
-            color: var(--color-primary);
+            color: var(--color-accent);
             text-decoration: underline;
+            transition: all 0.2s ease;
+        }
+        
+        .welcome-banner-html a:hover {
+            opacity: 0.8;
         }
 
         .welcome-banner-html strong {
@@ -308,7 +359,7 @@
             flex-shrink: 0;
             background: transparent;
             border: none;
-            border-radius: 4px;
+            border-radius: var(--lux-radius-sm);
             color: var(--color-text-muted);
             cursor: pointer;
             padding: 4px;
@@ -320,9 +371,10 @@
         }
 
         .welcome-banner-dismiss:hover {
-            background: var(--color-border);
-            color: var(--color-text);
+            background: var(--color-background-hover);
+            color: var(--color-accent);
             opacity: 1;
+            transform: scale(1.1);
         }
 
         .welcome-banner-dismiss .material-symbols-outlined {

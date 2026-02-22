@@ -22,7 +22,15 @@
 
 .field-title {
   font-weight: bold;
-  color: var(--color-primary);
+  color: var(--color-accent);
+}
+
+/* NEW DESIGN: Enhanced field styling */
+.new-design .field-title {
+  letter-spacing: 0.02em;
+}
+.new-design .field-description {
+  opacity: 0.7;
 }
 
 .field-description {
@@ -69,7 +77,17 @@ input[type="number"]:focus,
 input[type="password"]:focus,
 textarea:focus {
   background-color: var(--color-background);
-  filter: brightness(1.2);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(237, 166, 163, 0.1);
+  outline: none;
+}
+
+/* NEW DESIGN: Enhanced input focus */
+.new-design.light-mode input[type="text"]:focus,
+.new-design.light-mode input[type="number"]:focus,
+.new-design.light-mode input[type="password"]:focus,
+.new-design.light-mode textarea:focus {
+  box-shadow: 0 0 0 3px rgba(226, 125, 96, 0.1);
 }
 
 .light-mode input[type="text"]:focus,
@@ -107,7 +125,8 @@ textarea:focus {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: rgba(252, 251, 251, 0.15);
+  border: 1px solid var(--color-border);
   border-radius: 34px;
   cursor: pointer;
   transition: 0.4s;
@@ -120,17 +139,52 @@ textarea:focus {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: var(--color-text);
   border-radius: 50%;
   transition: 0.4s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 input:checked + .toggler {
-  background-color: #2196f3;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 10px rgba(237, 166, 163, 0.3);
 }
 
 input:checked + .toggler:before {
   transform: translateX(26px);
+  background-color: var(--color-background);
+}
+
+/* Light mode toggle */
+.light-mode .toggler {
+  background-color: rgba(45, 79, 30, 0.1);
+}
+
+.light-mode .toggler:before {
+  background-color: var(--color-text);
+}
+
+.light-mode input:checked + .toggler {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.light-mode input:checked + .toggler:before {
+  background-color: var(--color-background);
+}
+
+/* NEW DESIGN: Enhanced toggle */
+.new-design .toggler {
+  background: linear-gradient(180deg, rgba(252, 251, 251, 0.1) 0%, rgba(252, 251, 251, 0.05) 100%);
+}
+
+.new-design.light-mode .toggler {
+  background: linear-gradient(180deg, rgba(45, 79, 30, 0.08) 0%, rgba(45, 79, 30, 0.04) 100%);
+}
+
+.new-design.light-mode input:checked + .toggler {
+  box-shadow: 0 0 10px rgba(226, 125, 96, 0.2);
 }
 
 /* Select Styles */
@@ -170,18 +224,24 @@ nav ul li a {
   text-decoration: none;
   color: var(--color-text);
   opacity: 0.8;
-  background-color: var(--color-panel);
+  background: linear-gradient(135deg, var(--color-panel) 0%, var(--color-background) 100%);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--lux-radius-md);
   padding: 1rem;
   width: 100%;
   transition: all 0.2s ease-in-out;
 }
 
 nav ul li a:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: var(--color-secondary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(237, 166, 163, 0.1);
+  border-color: rgba(237, 166, 163, 0.3);
+}
+
+/* NEW DESIGN: Enhanced nav links */
+.new-design.light-mode nav ul li a:hover {
+  box-shadow: 0 8px 24px rgba(226, 125, 96, 0.08);
+  border-color: rgba(226, 125, 96, 0.25);
 }
 
 nav ul li a img {
@@ -313,15 +373,24 @@ nav ul li a img {
 }
 
 .settings-tab.active {
-  border-color: var(--color-border);
-  /* box-shadow:
-    0 -4px 8px -2px var(--color-border),
-    4px 0 8px -2px var(--color-border),
-    -4px 0 8px -2px var(--color-border); */
+  border-color: var(--color-accent);
   font-weight: bold;
-  background-color: var(--color-panel);
+  background: linear-gradient(180deg, var(--color-panel) 0%, var(--color-background) 100%);
   min-width: min-content;
   max-width: 150px;
+  color: var(--color-accent);
+}
+
+/* NEW DESIGN: Enhanced settings tabs */
+.new-design .settings-tab {
+  border-radius: var(--lux-radius-sm) var(--lux-radius-sm) 0 0;
+}
+.new-design .settings-tab.active {
+  box-shadow: 0 -4px 12px rgba(237, 166, 163, 0.15);
+  border-bottom: 3px solid var(--color-accent);
+}
+.new-design.light-mode .settings-tab.active {
+  box-shadow: 0 -4px 12px rgba(226, 125, 96, 0.1);
 }
 
 
@@ -372,8 +441,13 @@ nav ul li a img {
 .section-title {
   font-size: 1.25rem;
   font-weight: bold;
-  color: var(--color-primary);
+  color: var(--color-accent);
   margin-bottom: 0.5rem;
+}
+
+/* NEW DESIGN: Enhanced section title */
+.new-design .section-title {
+  letter-spacing: 0.02em;
 }
 
 .section-description {

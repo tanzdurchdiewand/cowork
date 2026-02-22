@@ -442,6 +442,42 @@
   width: 100%;
   min-width: 0;
   font-size: 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--lux-radius-sm);
+  padding: 4px 6px;
+  transition: all 0.2s ease;
+}
+
+.scheduler-schedule-field input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(237, 166, 163, 0.2);
+}
+
+.scheduler-schedule-field input:invalid {
+  border-color: #F44336;
+  background-color: rgba(244, 67, 54, 0.1);
+}
+
+.scheduler-schedule-help {
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  font-size: 0.8rem;
+}
+
+.scheduler-schedule-help code {
+  background: var(--color-panel);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+/* NEW DESIGN: Enhanced schedule inputs */
+.new-design .scheduler-schedule-field input:focus {
+  box-shadow: 0 0 0 2px rgba(237, 166, 163, 0.2);
+}
+.new-design.light-mode .scheduler-schedule-field input:focus {
+  box-shadow: 0 0 0 2px rgba(226, 125, 96, 0.15);
 }
 
 .scheduler-schedule-label {
