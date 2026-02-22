@@ -341,7 +341,12 @@ class ScheduledTask(BaseTask):
 
     def check_schedule(self, frequency_seconds: float = 60.0) -> bool:
         with self._lock:
-            crontab = CronTab(crontab=self.schedule.to_crontab())  # type: ignore
+            try:
+                crontab = CronTab(crontab=self.schedule.to_crontab())  # type: ignore
+            except ValueError as e:
+                PrintStyle.warning(f"Invalid crontab for task '{self.name}': {e}. Disabling task.")
+                self.state = TaskState.DISABLED
+                return False
 
             # Get the timezone from the schedule or use UTC as fallback
             task_timezone = pytz.timezone(self.schedule.timezone or Localization.get().get_timezone())
@@ -363,8 +368,12 @@ class ScheduledTask(BaseTask):
 
     def get_next_run(self) -> datetime | None:
         with self._lock:
-            crontab = CronTab(crontab=self.schedule.to_crontab())  # type: ignore
-            return crontab.next(now=datetime.now(timezone.utc), return_datetime=True)  # type: ignore
+            try:
+                crontab = CronTab(crontab=self.schedule.to_crontab())  # type: ignore
+                return crontab.next(now=datetime.now(timezone.utc), return_datetime=True)  # type: ignore
+            except ValueError as e:
+                PrintStyle.warning(f"Invalid crontab for task '{self.name}': {e}")
+                return None
 
 
 class PlannedTask(BaseTask):
@@ -489,7 +498,27 @@ class SchedulerTaskList(BaseModel):
             with self._lock:
                 data = self.__class__.model_validate_json(read_file(path))
                 self.tasks.clear()
-                self.tasks.extend(data.tasks)
+                
+                # Filter out tasks with invalid schedules
+                valid_tasks = []
+                for task in data.tasks:
+                    if isinstance(task, ScheduledTask):
+                        try:
+                            # Try to parse the crontab
+                            CronTab(crontab=task.schedule.to_crontab())
+                            valid_tasks.append(task)
+                        except ValueError as e:
+                            PrintStyle.warning(f"Removing task '{task.name}' with invalid schedule: {e}")
+                            # Skip this task - it will be removed from the list
+                    else:
+                        valid_tasks.append(task)
+                
+                self.tasks.extend(valid_tasks)
+                
+                # If we removed any tasks, save the cleaned list
+                if len(valid_tasks) < len(data.tasks):
+                    await self.save()
+                    PrintStyle.warning(f"Cleaned up {len(data.tasks) - len(valid_tasks)} invalid task(s)")
         return self
 
     async def add_task(self, task: Union[ScheduledTask, AdHocTask, PlannedTask]) -> "SchedulerTaskList":

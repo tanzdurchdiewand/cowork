@@ -635,6 +635,15 @@ const schedulerStoreModel = {
       return;
     }
 
+    // Validate schedule fields before saving
+    if (this.editingTask.type === "scheduled") {
+      this.editingTask.schedule.minute = this.validateCronField(this.editingTask.schedule.minute, "minute");
+      this.editingTask.schedule.hour = this.validateCronField(this.editingTask.schedule.hour, "hour");
+      this.editingTask.schedule.day = this.validateCronField(this.editingTask.schedule.day, "day");
+      this.editingTask.schedule.month = this.validateCronField(this.editingTask.schedule.month, "month");
+      this.editingTask.schedule.weekday = this.validateCronField(this.editingTask.schedule.weekday, "weekday");
+    }
+
     if (this.editingTask.type === "adhoc" && !this.editingTask.token) {
       this.editingTask.token = this.generateRandomToken();
     }
@@ -903,6 +912,35 @@ const schedulerStoreModel = {
       planned: "Planned",
     };
     return typeMap[type] || type;
+  },
+
+  // Validate and sanitize cron field values
+  validateCronField(value, fieldType) {
+    if (!value || value.trim() === "") return "*";
+    
+    // Remove all invalid characters (only allow digits, *, /, -, ,)
+    let sanitized = value.replace(/[^0-9*,/-]/g, "");
+    
+    // Validate ranges based on field type
+    const ranges = {
+      minute: { min: 0, max: 59 },
+      hour: { min: 0, max: 23 },
+      day: { min: 1, max: 31 },
+      month: { min: 1, max: 12 },
+      weekday: { min: 0, max: 6 }
+    };
+    
+    // If it's just a number, check if it's in range
+    if (/^\d+$/.test(sanitized)) {
+      const num = parseInt(sanitized, 10);
+      const range = ranges[fieldType];
+      if (range && (num < range.min || num > range.max)) {
+        // Out of range, default to *
+        return "*";
+      }
+    }
+    
+    return sanitized || "*";
   },
 
   getStateBadgeClass(state) {
